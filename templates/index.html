@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>تبدیل تاریخ</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h1>تبدیل تاریخ شمسی به میلادی و قمری</h1>
+
+    <form method="POST">
+      <div class="row">
+        <label for="year">سال:</label>
+        <select name="year" id="year">
+          {% for y in years %}
+            <option value="{{ y }}">{{ y }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="row">
+        <label for="month">ماه:</label>
+        <select name="month" id="month">
+          {% for num, name in shamsi_months.items() %}
+            <option value="{{ num }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="row">
+        <label for="day">روز:</label>
+        <select name="day" id="day">
+          {% for d in days %}
+            <option value="{{ d }}">{{ d }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="submit">تبدیل</button>
+    </form>
+
+    {% if result %}
+      {% if result.error %}
+        <p style="color:red;">{{ result.error }}</p>
+      {% else %}
+        <div class="result">
+          <p>📅 تاریخ شمسی: <strong>{{ result.shamsi }}</strong></p>
+          <p>📆 تاریخ میلادی: <strong>{{ result.miladi }}</strong></p>
+          <p>🌙 تاریخ قمری: <strong>{{ result.hijri }}</strong></p>
+          <p>🗓 روز هفته: <strong>{{ result.weekday }}</strong></p>
+          <p>📆 تعداد روزهای گذشته از این تاریخ: <strong>{{ result.age_days }}</strong> روز</p>
+          <p>📅 سال های گذشته<strong>{{ result.age_years }}</strong> سال گذشته است</p>
+        </div>
+      {% endif %}
+    {% endif %}
+  </div>
+</body>
+</html>
