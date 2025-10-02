@@ -1,4 +1,5 @@
-flask
+Flask
 jdatetime
 hijri-converter
 gunicorn
+python-dateutil
