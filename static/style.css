@@ -60,20 +60,30 @@ input[type="text"] {
   background-color: rgba(255,255,255,0.8);
 }
 
+/* 🎯 دکمه‌ها زیباتر شده */
+.buttons {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
 button {
   padding: 12px;
-  background-color: #0077cc;
+  background: linear-gradient(to right, #0077cc, #00aaff);
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   font-size: 1rem;
   width: 100%;
-  transition: background-color 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
 }
 
 button:hover {
-  background-color: #005fa3;
+  background: linear-gradient(to right, #005fa3, #0088cc);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
 .result {
@@ -84,29 +94,6 @@ button:hover {
   padding: 15px;
   border-radius: 8px;
   line-height: 1.8;
-}
-
-/* ✅ آیکون‌های اشتراک‌گذاری — خارج از @media */
-.share-icons {
-  position: fixed;
-  top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  z-index: 999;
-}
-
-.share-icons img {
-  width: 32px;
-  height: 32px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.share-icons img:hover {
-  transform: scale(1.2);
 }
 
 /* حالت موبایل */
