@@ -3,6 +3,7 @@ import jdatetime
 from hijri_converter import convert
 import datetime
 from dateutil.relativedelta import relativedelta
+import requests
 
 app = Flask(__name__)
 
@@ -45,6 +46,14 @@ def get_today_info():
     weekday_farsi = weekday_fa.get(weekday_en, "نامشخص")
     return f"امروز {weekday_farsi} {today_miladi.strftime('%d %B %Y')} میلادیه، مطابق با تقویم شمسی {today_shamsi.day} {shamsi_months[today_shamsi.month]} {today_shamsi.year}"
 
+def get_prayer_times(city="Mashhad"):
+    try:
+        response = requests.get(f"https://api.aladhan.com/v1/timingsByCity?city={city}&country=Iran&method=8")
+        data = response.json()
+        return data["data"]["timings"]
+    except:
+        return None
+
 @app.route('/', methods=['GET', 'POST'])
 def convert_date():
     result = {}
@@ -53,8 +62,22 @@ def convert_date():
 
     if request.method == 'POST':
         action = request.form.get("action")
+
         if action == "today":
             result["today_text"] = get_today_info()
+
+        elif action == "prayer":
+            city = request.form.get("city", "").strip()
+            if city:
+                times = get_prayer_times(city)
+                if times:
+                    result["prayer_times"] = times
+                    result["city_name"] = city
+                else:
+                    result["error"] = "اوقات شرعی برای این شهر پیدا نشد!"
+            else:
+                result["error"] = "لطفاً نام شهر را وارد کنید."
+
         else:
             try:
                 year = extract_number(request.form['year'])
