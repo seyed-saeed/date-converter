@@ -82,8 +82,6 @@
         {% else %}
           <p>📌 {{ result.today_text }}</p>
           <p>🌙 تاریخ قمری: <strong>{{ result.hijri_today }}</strong></p>
-          <p>📆 مناسبت‌های امروز: {{ result.events }}</p>
-          <p>📛 تعطیلی رسمی: <strong>{{ result.holiday }}</strong></p>
         {% endif %}
       </div>
     {% endif %}
@@ -91,6 +89,7 @@
     <!-- دکمه نمایش فرم اوقات شرعی -->
     <div class="buttons">
       <button type="button" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
+      <button type="button" onclick="showTimeForm()">🕒 ساعت کشور</button>
     </div>
 
     <!-- فرم مخفی‌شده برای وارد کردن شهر -->
@@ -120,11 +119,37 @@
         {% endif %}
       </div>
     {% endif %}
+
+    <!-- فرم مخفی‌شده برای وارد کردن کشور -->
+    <form method="POST" id="time-form" style="display: none;">
+      <input type="hidden" name="action" value="time">
+      <div class="row">
+        <label for="country">نام کشور:</label>
+        <input type="text" name="country" id="country" placeholder="مثلاً Japan یا ژاپن">
+      </div>
+      <div class="buttons">
+        <button type="submit">تأیید</button>
+      </div>
+    </form>
+
+    {% if result and result.action == "time" %}
+      <div class="result">
+        {% if result.error %}
+          <p class="error">{{ result.error }}</p>
+        {% else %}
+          <h3>🕒 ساعت فعلی در {{ result.country_name }}</h3>
+          <p>{{ result.local_time }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
   </div>
 
   <script>
     function showPrayerForm() {
       document.getElementById("prayer-form").style.display = "block";
+    }
+    function showTimeForm() {
+      document.getElementById("time-form").style.display = "block";
     }
   </script>
 </body>
