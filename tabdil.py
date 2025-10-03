@@ -34,12 +34,10 @@ hijri_months = {
     9: "رمضان", 10: "شوال", 11: "ذو القعدة", 12: "ذو الحجة"
 }
 
-# تابع استخراج عدد از رشته
 def extract_number(text):
     digits = ''.join(c for c in text if c.isdigit())
     return int(digits) if digits else None
 
-# تابع گرفتن اطلاعات امروز
 def get_today_info():
     today_miladi = datetime.date.today()
     today_shamsi = jdatetime.date.fromgregorian(date=today_miladi)
