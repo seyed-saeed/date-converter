@@ -67,13 +67,16 @@
       </div>
     {% endif %}
 
-    <!-- فرم امروز -->
-    <form method="POST">
-      <input type="hidden" name="action" value="today">
-      <div class="buttons">
+    <!-- دکمه‌های اصلی -->
+    <div class="buttons">
+      <form method="POST">
+        <input type="hidden" name="action" value="today">
         <button type="submit">📅 امروز</button>
-      </div>
-    </form>
+      </form>
+
+      <button type="button" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
+      <button type="button" onclick="showTimeForm()">🕒 ساعت کشور</button>
+    </div>
 
     {% if result and result.action == "today" %}
       <div class="result">
@@ -85,12 +88,6 @@
         {% endif %}
       </div>
     {% endif %}
-
-    <!-- دکمه نمایش فرم اوقات شرعی -->
-    <div class="buttons">
-      <button type="button" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
-      <button type="button" onclick="showTimeForm()">🕒 ساعت کشور</button>
-    </div>
 
     <!-- فرم مخفی‌شده برای وارد کردن شهر -->
     <form method="POST" id="prayer-form" style="display: none;">
