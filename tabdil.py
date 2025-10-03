@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 import jdatetime
 from hijri_converter import convert
 import datetime
-from dateutil.relativedelta import relativedelta  # اضافه شده برای محاسبه دقیق عمر
+from dateutil.relativedelta import relativedelta
 
 app = Flask(__name__)
 
@@ -39,49 +39,61 @@ def extract_number(text):
     digits = ''.join(c for c in text if c.isdigit())
     return int(digits) if digits else None
 
+# تابع گرفتن اطلاعات امروز
+def get_today_info():
+    today_miladi = datetime.date.today()
+    today_shamsi = jdatetime.date.fromgregorian(date=today_miladi)
+    weekday_en = today_miladi.strftime('%A')
+    weekday_farsi = weekday_fa.get(weekday_en, "نامشخص")
+    return f"امروز {weekday_farsi} {today_miladi.strftime('%d %B %Y')} میلادیه، مطابق با تقویم شمسی {today_shamsi.day} {shamsi_months[today_shamsi.month]} {today_shamsi.year}"
+
 @app.route('/', methods=['GET', 'POST'])
 def convert_date():
-    result = None
+    result = {}
     years = list(range(1310, 1481))
     days = list(range(1, 32))
 
     if request.method == 'POST':
-        try:
-            year = extract_number(request.form['year'])
-            month = extract_number(request.form['month'])
-            day = extract_number(request.form['day'])
+        action = request.form.get("action")
+        if action == "today":
+            result["today_text"] = get_today_info()
+        else:
+            try:
+                year = extract_number(request.form['year'])
+                month = extract_number(request.form['month'])
+                day = extract_number(request.form['day'])
 
-            if not (year and month and day):
-                raise ValueError("ورودی عددی معتبر نیست")
+                if not (year and month and day):
+                    raise ValueError("ورودی عددی معتبر نیست")
 
-            shamsi_date = jdatetime.date(year, month, day)
-            miladi_date = shamsi_date.togregorian()
+                shamsi_date = jdatetime.date(year, month, day)
+                miladi_date = shamsi_date.togregorian()
 
-            hijri = convert.Gregorian(miladi_date.year, miladi_date.month, miladi_date.day).to_hijri()
-            hijri_month_name = hijri_months.get(hijri.month, "نامشخص")
-            hijri_str = f"{hijri.year}/{hijri_month_name}/{hijri.day}"
+                hijri = convert.Gregorian(miladi_date.year, miladi_date.month, miladi_date.day).to_hijri()
+                hijri_month_name = hijri_months.get(hijri.month, "نامشخص")
+                hijri_str = f"{hijri.year}/{hijri_month_name}/{hijri.day}"
 
-            weekday_en = miladi_date.strftime('%A')
-            weekday_farsi = weekday_fa.get(weekday_en, "نامشخص")
-            weekday_arabic = weekday_ar.get(weekday_en, "غير معروف")
-            weekday_combined = f"{weekday_farsi}، {weekday_en}، {weekday_arabic}"
+                weekday_en = miladi_date.strftime('%A')
+                weekday_farsi = weekday_fa.get(weekday_en, "نامشخص")
+                weekday_arabic = weekday_ar.get(weekday_en, "غير معروف")
+                weekday_combined = f"{weekday_farsi}، {weekday_en}، {weekday_arabic}"
 
-            today = datetime.date.today()
-            age_days = (today - miladi_date).days
-            delta = relativedelta(today, miladi_date)
-            age_precise = f"{delta.years} سال، {delta.months} ماه، {delta.days} روز"
+                today = datetime.date.today()
+                age_days = (today - miladi_date).days
+                delta = relativedelta(today, miladi_date)
+                age_precise = f"{delta.years} سال، {delta.months} ماه، {delta.days} روز"
 
-            result = {
-                'shamsi': f"{shamsi_date.year}/{shamsi_months[shamsi_date.month]}/{shamsi_date.day}",
-                'miladi': miladi_date.strftime('%Y/%m/%d'),
-                'hijri': hijri_str,
-                'weekday': weekday_combined,
-                'age_days': age_days,
-                'age_precise': age_precise
-            }
+                result = {
+                    'shamsi': f"{shamsi_date.year}/{shamsi_months[shamsi_date.month]}/{shamsi_date.day}",
+                    'miladi': miladi_date.strftime('%Y/%m/%d'),
+                    'hijri': hijri_str,
+                    'weekday': weekday_combined,
+                    'age_days': age_days,
+                    'age': age_precise
+                }
 
-        except Exception:
-            result = {'error': 'تاریخ وارد شده معتبر نیست!'}
+            except Exception:
+                result = {'error': 'تاریخ وارد شده معتبر نیست!'}
 
     return render_template('index.html', years=years, days=days, shamsi_months=shamsi_months, result=result)
 
