@@ -38,6 +38,10 @@ form {
   margin-bottom: 40px;
 }
 
+#prayer-form {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
 .row {
   margin-bottom: 20px;
   text-align: right;
