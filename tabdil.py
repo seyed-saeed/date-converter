@@ -16,28 +16,31 @@ shamsi_months = {
 
 # نماد ماه شمسی به سبک ایرانی
 persian_zodiac = {
-    1: "♈ قوچ (فروردین)",
-    2: "♉ گاو (اردیبهشت)",
-    3: "♊ دوپیکر (خرداد)",
-    4: "♋ خرچنگ (تیر)",
-    5: "♌ شیر (مرداد)",
-    6: "♍ خوشه گندم (شهریور)",
-    7: "♎ ترازو (مهر)",
-    8: "♏ عقرب (آبان)",
-    9: "♐ کمان‌دار (آذر)",
-    10: "♑ بز (دی)",
-    11: "♒ دلو (بهمن)",
-    12: "♓ ماهی (اسفند)"
+    1: "♈ قوچ (فروردین)", 2: "♉ گاو (اردیبهشت)", 3: "♊ دوپیکر (خرداد)",
+    4: "♋ خرچنگ (تیر)", 5: "♌ شیر (مرداد)", 6: "♍ خوشه گندم (شهریور)",
+    7: "♎ ترازو (مهر)", 8: "♏ عقرب (آبان)", 9: "♐ کمان‌دار (آذر)",
+    10: "♑ بز (دی)", 11: "♒ دلو (بهمن)", 12: "♓ ماهی (اسفند)"
 }
 
-# روزهای هفته به فارسی
+# نگاشت کشور به منطقه زمانی
+country_timezones = {
+    "ایران": "Asia/Tehran", "Iran": "Asia/Tehran",
+    "ژاپن": "Asia/Tokyo", "Japan": "Asia/Tokyo",
+    "آلمان": "Europe/Berlin", "Germany": "Europe/Berlin",
+    "فرانسه": "Europe/Paris", "France": "Europe/Paris",
+    "انگلیس": "Europe/London", "UK": "Europe/London",
+    "آمریکا": "America/New_York", "USA": "America/New_York",
+    "چین": "Asia/Shanghai", "China": "Asia/Shanghai",
+    "هند": "Asia/Kolkata", "India": "Asia/Kolkata",
+    "استرالیا": "Australia/Sydney", "Australia": "Australia/Sydney"
+}
+
+# روزهای هفته به فارسی و عربی
 weekday_fa = {
     'Saturday': 'شنبه', 'Sunday': 'یک‌شنبه', 'Monday': 'دوشنبه',
     'Tuesday': 'سه‌شنبه', 'Wednesday': 'چهارشنبه',
     'Thursday': 'پنج‌شنبه', 'Friday': 'جمعه'
 }
-
-# روزهای هفته به عربی
 weekday_ar = {
     'Saturday': 'السبت', 'Sunday': 'الأحد', 'Monday': 'الاثنين',
     'Tuesday': 'الثلاثاء', 'Wednesday': 'الأربعاء',
@@ -82,13 +85,10 @@ def convert_date():
         if action == "today":
             result["action"] = "today"
             result["today_text"] = get_today_info()
-
-            # تاریخ قمری امروز
             today_miladi = datetime.date.today()
             hijri = convert.Gregorian(today_miladi.year, today_miladi.month, today_miladi.day).to_hijri()
             hijri_month_name = hijri_months.get(hijri.month, "نامشخص")
-            hijri_str = f"{hijri.year}/{hijri_month_name}/{hijri.day}"
-            result["hijri_today"] = hijri_str
+            result["hijri_today"] = f"{hijri.year}/{hijri_month_name}/{hijri.day}"
 
         elif action == "prayer":
             result["action"] = "prayer"
@@ -108,16 +108,14 @@ def convert_date():
             country = request.form.get("country", "").strip()
             if country:
                 try:
-                    zones = requests.get("https://worldtimeapi.org/api/timezone").json()
-                    matched = [z for z in zones if country.lower() in z.lower() or country in z]
-                    if matched:
-                        zone = matched[0]
+                    zone = country_timezones.get(country)
+                    if zone:
                         time_data = requests.get(f"https://worldtimeapi.org/api/timezone/{zone}").json()
                         local_time = time_data["datetime"].split(".")[0].replace("T", " ساعت ")
                         result["country_name"] = country
                         result["local_time"] = local_time
                     else:
-                        result["error"] = "کشور مورد نظر پیدا نشد یا پشتیبانی نمی‌شود!"
+                        result["error"] = "کشور مورد نظر پشتیبانی نمی‌شود یا نامش نادرست است!"
                 except:
                     result["error"] = "خطا در دریافت ساعت کشور!"
             else:
@@ -132,7 +130,6 @@ def convert_date():
 
                 shamsi_date = jdatetime.date(year, month, day)
                 miladi_date = shamsi_date.togregorian()
-
                 hijri = convert.Gregorian(miladi_date.year, miladi_date.month, miladi_date.day).to_hijri()
                 hijri_month_name = hijri_months.get(hijri.month, "نامشخص")
                 hijri_str = f"{hijri.year}/{hijri_month_name}/{hijri.day}"
@@ -163,6 +160,5 @@ def convert_date():
                 result["error"] = "تاریخ وارد شده معتبر نیست!"
 
     return render_template('index.html', years=years, days=days, shamsi_months=shamsi_months, result=result)
-
 if __name__ == '__main__':
     app.run(debug=True)
