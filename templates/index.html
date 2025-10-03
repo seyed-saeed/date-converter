@@ -58,6 +58,7 @@
           <p>📆 تاریخ میلادی: <strong>{{ result.miladi }}</strong></p>
           <p>🌙 تاریخ قمری: <strong>{{ result.hijri }}</strong></p>
           <p>🗓 روز هفته: <strong>{{ result.weekday }}</strong></p>
+          <p>🪐 نماد ماه: <strong>{{ result.month_symbol }}</strong></p>
           <p>📆 تعداد روزهای گذشته از این تاریخ: <strong>{{ result.age_days }}</strong> روز</p>
           {% if result.age %}
             <p>🎂 سن دقیق: <strong>{{ result.age }}</strong></p>
@@ -80,6 +81,9 @@
           <p class="error">{{ result.error }}</p>
         {% else %}
           <p>📌 {{ result.today_text }}</p>
+          <p>🌙 تاریخ قمری: <strong>{{ result.hijri_today }}</strong></p>
+          <p>📆 مناسبت‌های امروز: {{ result.events }}</p>
+          <p>📛 تعطیلی رسمی: <strong>{{ result.holiday }}</strong></p>
         {% endif %}
       </div>
     {% endif %}
