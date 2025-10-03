@@ -41,8 +41,7 @@ form {
   margin-bottom: 20px;
 }
 
-#prayer-form,
-#time-form {
+#prayer-form {
   animation: fadeIn 0.4s ease-in-out;
 }
 
