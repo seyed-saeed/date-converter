@@ -70,7 +70,6 @@ input[type="text"]::placeholder {
   font-style: italic;
 }
 
-/* 🎯 دکمه‌ها زیباتر شده */
 .buttons {
   display: flex;
   gap: 10px;
@@ -122,13 +121,11 @@ button:hover {
   text-align: center;
 }
 
-/* افکت نمایش نتیجه */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* حالت موبایل */
 @media screen and (max-width: 480px) {
   body {
     padding: 10px;
