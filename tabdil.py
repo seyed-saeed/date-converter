@@ -22,19 +22,6 @@ persian_zodiac = {
     10: "♑ بز (دی)", 11: "♒ دلو (بهمن)", 12: "♓ ماهی (اسفند)"
 }
 
-# نگاشت کشور به منطقه زمانی
-country_timezones = {
-    "ایران": "Asia/Tehran", "Iran": "Asia/Tehran",
-    "ژاپن": "Asia/Tokyo", "Japan": "Asia/Tokyo",
-    "آلمان": "Europe/Berlin", "Germany": "Europe/Berlin",
-    "فرانسه": "Europe/Paris", "France": "Europe/Paris",
-    "انگلیس": "Europe/London", "UK": "Europe/London",
-    "آمریکا": "America/New_York", "USA": "America/New_York",
-    "چین": "Asia/Shanghai", "China": "Asia/Shanghai",
-    "هند": "Asia/Kolkata", "India": "Asia/Kolkata",
-    "استرالیا": "Australia/Sydney", "Australia": "Australia/Sydney"
-}
-
 # روزهای هفته به فارسی و عربی
 weekday_fa = {
     'Saturday': 'شنبه', 'Sunday': 'یک‌شنبه', 'Monday': 'دوشنبه',
@@ -103,24 +90,6 @@ def convert_date():
             else:
                 result["error"] = "لطفاً نام شهر را وارد کنید."
 
-        elif action == "time":
-            result["action"] = "time"
-            country = request.form.get("country", "").strip()
-            if country:
-                try:
-                    zone = country_timezones.get(country)
-                    if zone:
-                        time_data = requests.get(f"https://worldtimeapi.org/api/timezone/{zone}").json()
-                        local_time = time_data["datetime"].split(".")[0].replace("T", " ساعت ")
-                        result["country_name"] = country
-                        result["local_time"] = local_time
-                    else:
-                        result["error"] = "کشور مورد نظر پشتیبانی نمی‌شود یا نامش نادرست است!"
-                except:
-                    result["error"] = "خطا در دریافت ساعت کشور!"
-            else:
-                result["error"] = "لطفاً نام کشور را وارد کنید."
-
         elif action == "convert":
             result["action"] = "convert"
             try:
@@ -160,5 +129,6 @@ def convert_date():
                 result["error"] = "تاریخ وارد شده معتبر نیست!"
 
     return render_template('index.html', years=years, days=days, shamsi_months=shamsi_months, result=result)
+
 if __name__ == '__main__':
     app.run(debug=True)
