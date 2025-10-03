@@ -109,4 +109,26 @@ button:hover {
   .result {
     font-size: 0.95rem;
   }
+.share-icons {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 999;
+}
+
+.share-icons img {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.share-icons img:hover {
+  transform: scale(1.2);
+}
+
 }
