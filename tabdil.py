@@ -14,6 +14,13 @@ shamsi_months = {
     9: "آذر", 10: "دی", 11: "بهمن", 12: "اسفند"
 }
 
+# نماد ماه شمسی
+month_symbols = {
+    1: "فروردین", 2: "اردیبهشت", 3: "خرداد", 4: "تیر",
+    5: "مرداد", 6: "شهریور", 7: "مهر", 8: "آبان",
+    9: "آذر", 10: "دی", 11: "بهمن", 12: "اسفند"
+}
+
 # روزهای هفته به فارسی
 weekday_fa = {
     'Saturday': 'شنبه', 'Sunday': 'یک‌شنبه', 'Monday': 'دوشنبه',
@@ -67,6 +74,26 @@ def convert_date():
             result["action"] = "today"
             result["today_text"] = get_today_info()
 
+            # تاریخ قمری امروز
+            today_miladi = datetime.date.today()
+            hijri = convert.Gregorian(today_miladi.year, today_miladi.month, today_miladi.day).to_hijri()
+            hijri_month_name = hijri_months.get(hijri.month, "نامشخص")
+            hijri_str = f"{hijri.year}/{hijri_month_name}/{hijri.day}"
+            result["hijri_today"] = hijri_str
+
+            # مناسبت و تعطیلی
+            try:
+                today_shamsi = jdatetime.date.today()
+                response = requests.get(f"https://api.keybit.ir/calendar/?year={today_shamsi.year}&month={today_shamsi.month}&day={today_shamsi.day}")
+                data = response.json()
+                events = data.get("events", [])
+                holiday = "بله" if data.get("is_holiday") else "خیر"
+                result["events"] = "، ".join(events) if events else "مناسبتی ثبت نشده است."
+                result["holiday"] = holiday
+            except:
+                result["events"] = "خطا در دریافت مناسبت‌ها"
+                result["holiday"] = "نامشخص"
+
         elif action == "prayer":
             result["action"] = "prayer"
             city = request.form.get("city", "").strip()
@@ -107,13 +134,16 @@ def convert_date():
                 delta = relativedelta(today, miladi_date)
                 age_precise = f"{delta.years} سال، {delta.months} ماه، {delta.days} روز"
 
+                month_symbol = month_symbols.get(month, "نامشخص")
+
                 result.update({
                     'shamsi': f"{shamsi_date.year}/{shamsi_months[shamsi_date.month]}/{shamsi_date.day}",
                     'miladi': miladi_date.strftime('%Y/%m/%d'),
                     'hijri': hijri_str,
                     'weekday': weekday_combined,
                     'age_days': age_days,
-                    'age': age_precise
+                    'age': age_precise,
+                    'month_symbol': month_symbol
                 })
 
             except Exception:
