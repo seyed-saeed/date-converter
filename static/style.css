@@ -35,6 +35,7 @@ h1 {
 
 form {
   width: 100%;
+  margin-bottom: 20px;
 }
 
 .row {
@@ -94,6 +95,13 @@ button:hover {
   padding: 15px;
   border-radius: 8px;
   line-height: 1.8;
+}
+
+.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 20px;
+  text-align: center;
 }
 
 /* حالت موبایل */
