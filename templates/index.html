@@ -42,22 +42,49 @@
         </select>
       </div>
 
-      <button type="submit">تبدیل</button>
+      <div class="buttons">
+        <button type="submit">🔄 تبدیل</button>
+        <button type="submit" name="action" value="today">📅 امروز</button>
+      </div>
     </form>
 
     {% if result %}
       {% if result.error %}
-        <p style="color:red;">{{ result.error }}</p>
+        <p class="error">{{ result.error }}</p>
       {% else %}
         <div class="result">
+          {% if result.today_text %}
+            <p>📌 {{ result.today_text }}</p>
+          {% endif %}
           <p>📅 تاریخ شمسی: <strong>{{ result.shamsi }}</strong></p>
           <p>📆 تاریخ میلادی: <strong>{{ result.miladi }}</strong></p>
           <p>🌙 تاریخ قمری: <strong>{{ result.hijri }}</strong></p>
           <p>🗓 روز هفته: <strong>{{ result.weekday }}</strong></p>
           <p>📆 تعداد روزهای گذشته از این تاریخ: <strong>{{ result.age_days }}</strong> روز</p>
+          {% if result.age %}
+            <p>🎂 سن دقیق: <strong>{{ result.age }}</strong></p>
+          {% endif %}
         </div>
       {% endif %}
     {% endif %}
+  </div>
+
+  <div class="share-icons">
+    <a href="https://t.me/share/url?url=https://date-converter.onrender.com" target="_blank">
+      <img src="static/icons/telegram.png" alt="تلگرام">
+    </a>
+    <a href="https://api.whatsapp.com/send?text=https://date-converter.onrender.com" target="_blank">
+      <img src="static/icons/whatsapp.png" alt="واتساپ">
+    </a>
+    <a href="https://rubika.ir/share?url=https://date-converter.onrender.com" target="_blank">
+      <img src="static/icons/rubika.png" alt="روبیکا">
+    </a>
+    <a href="https://eitaa.com/share/url?url=https://date-converter.onrender.com" target="_blank">
+      <img src="static/icons/eitaa.png" alt="ایتا">
+    </a>
+    <a href="https://shad.ir/share?url=https://date-converter.onrender.com" target="_blank">
+      <img src="static/icons/shad.png" alt="شاد">
+    </a>
   </div>
 </body>
 </html>
