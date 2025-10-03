@@ -14,11 +14,20 @@ shamsi_months = {
     9: "آذر", 10: "دی", 11: "بهمن", 12: "اسفند"
 }
 
-# نماد ماه شمسی
-month_symbols = {
-    1: "فروردین", 2: "اردیبهشت", 3: "خرداد", 4: "تیر",
-    5: "مرداد", 6: "شهریور", 7: "مهر", 8: "آبان",
-    9: "آذر", 10: "دی", 11: "بهمن", 12: "اسفند"
+# نماد ماه شمسی به سبک ایرانی
+persian_zodiac = {
+    1: "♈ قوچ (فروردین)",
+    2: "♉ گاو (اردیبهشت)",
+    3: "♊ دوپیکر (خرداد)",
+    4: "♋ خرچنگ (تیر)",
+    5: "♌ شیر (مرداد)",
+    6: "♍ خوشه گندم (شهریور)",
+    7: "♎ ترازو (مهر)",
+    8: "♏ عقرب (آبان)",
+    9: "♐ کمان‌دار (آذر)",
+    10: "♑ بز (دی)",
+    11: "♒ دلو (بهمن)",
+    12: "♓ ماهی (اسفند)"
 }
 
 # روزهای هفته به فارسی
@@ -81,19 +90,6 @@ def convert_date():
             hijri_str = f"{hijri.year}/{hijri_month_name}/{hijri.day}"
             result["hijri_today"] = hijri_str
 
-            # مناسبت و تعطیلی
-            try:
-                today_shamsi = jdatetime.date.today()
-                response = requests.get(f"https://api.keybit.ir/calendar/?year={today_shamsi.year}&month={today_shamsi.month}&day={today_shamsi.day}")
-                data = response.json()
-                events = data.get("events", [])
-                holiday = "بله" if data.get("is_holiday") else "خیر"
-                result["events"] = "، ".join(events) if events else "مناسبتی ثبت نشده است."
-                result["holiday"] = holiday
-            except:
-                result["events"] = "خطا در دریافت مناسبت‌ها"
-                result["holiday"] = "نامشخص"
-
         elif action == "prayer":
             result["action"] = "prayer"
             city = request.form.get("city", "").strip()
@@ -107,15 +103,32 @@ def convert_date():
             else:
                 result["error"] = "لطفاً نام شهر را وارد کنید."
 
+        elif action == "time":
+            result["action"] = "time"
+            country = request.form.get("country", "").strip()
+            if country:
+                try:
+                    zones = requests.get("https://worldtimeapi.org/api/timezone").json()
+                    matched = [z for z in zones if country.lower() in z.lower() or country in z]
+                    if matched:
+                        zone = matched[0]
+                        time_data = requests.get(f"https://worldtimeapi.org/api/timezone/{zone}").json()
+                        local_time = time_data["datetime"].split(".")[0].replace("T", " ساعت ")
+                        result["country_name"] = country
+                        result["local_time"] = local_time
+                    else:
+                        result["error"] = "کشور مورد نظر پیدا نشد یا پشتیبانی نمی‌شود!"
+                except:
+                    result["error"] = "خطا در دریافت ساعت کشور!"
+            else:
+                result["error"] = "لطفاً نام کشور را وارد کنید."
+
         elif action == "convert":
             result["action"] = "convert"
             try:
-                year = extract_number(request.form['year'])
-                month = extract_number(request.form['month'])
-                day = extract_number(request.form['day'])
-
-                if not (year and month and day):
-                    raise ValueError("ورودی عددی معتبر نیست")
+                year = int(request.form['year'])
+                month = int(request.form['month'])
+                day = int(request.form['day'])
 
                 shamsi_date = jdatetime.date(year, month, day)
                 miladi_date = shamsi_date.togregorian()
@@ -134,7 +147,7 @@ def convert_date():
                 delta = relativedelta(today, miladi_date)
                 age_precise = f"{delta.years} سال، {delta.months} ماه، {delta.days} روز"
 
-                month_symbol = month_symbols.get(month, "نامشخص")
+                month_symbol = persian_zodiac.get(month, "نامشخص")
 
                 result.update({
                     'shamsi': f"{shamsi_date.year}/{shamsi_months[shamsi_date.month]}/{shamsi_date.day}",
