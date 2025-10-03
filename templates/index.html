@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تبدیل تاریخ و اوقات شرعی</title>
+  <title>تبدیل تاریخ شمسی، میلادی، قمری + اوقات شرعی آنلاین</title>
   <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
@@ -77,15 +77,20 @@
       </div>
     {% endif %}
 
-    <!-- فرم اوقات شرعی -->
-    <form method="POST" id="prayer-form">
+    <!-- دکمه نمایش فرم اوقات شرعی -->
+    <div class="buttons">
+      <button type="button" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
+    </div>
+
+    <!-- فرم مخفی اوقات شرعی -->
+    <form method="POST" id="prayer-form" class="hidden">
       <input type="hidden" name="action" value="prayer">
       <div class="row">
         <label for="city">نام شهر:</label>
         <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
       </div>
       <div class="buttons">
-        <button type="submit">🕌 اوقات شرعی</button>
+        <button type="submit">✅ تأیید</button>
       </div>
     </form>
 
@@ -105,5 +110,11 @@
       </div>
     {% endif %}
   </div>
+
+  <script>
+    function showPrayerForm() {
+      document.getElementById("prayer-form").classList.remove("hidden");
+    }
+  </script>
 </body>
 </html>
