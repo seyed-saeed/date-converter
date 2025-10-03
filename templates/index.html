@@ -16,6 +16,7 @@
 
     <!-- فرم تبدیل تاریخ -->
     <form method="POST">
+      <input type="hidden" name="action" value="convert">
       <div class="row">
         <label for="year">سال:</label>
         <select name="year" id="year">
@@ -45,41 +46,14 @@
 
       <div class="buttons">
         <button type="submit">🔄 تبدیل</button>
-        <button type="submit" name="action" value="today">📅 امروز</button>
       </div>
     </form>
 
-    <!-- فرم دریافت اوقات شرعی -->
-    <form method="POST">
-      <div class="row">
-        <label for="city">نام شهر:</label>
-        <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
-      </div>
-      <div class="buttons">
-        <button type="submit" name="action" value="prayer">🕌 اوقات شرعی</button>
-      </div>
-    </form>
-
-    <!-- نمایش نتایج -->
-    {% if result %}
-      {% if result.error %}
-        <p class="error">{{ result.error }}</p>
-      {% elif result.today_text %}
-        <div class="result">
-          <p>📌 {{ result.today_text }}</p>
-        </div>
-      {% elif result.prayer_times %}
-        <div class="result">
-          <h3>🕌 اوقات شرعی امروز در {{ result.city_name }}</h3>
-          <p>اذان صبح: {{ result.prayer_times.Fajr }}</p>
-          <p>طلوع آفتاب: {{ result.prayer_times.Sunrise }}</p>
-          <p>اذان ظهر: {{ result.prayer_times.Dhuhr }}</p>
-          <p>اذان عصر: {{ result.prayer_times.Asr }}</p>
-          <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
-          <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
-        </div>
-      {% else %}
-        <div class="result">
+    {% if result and result.action == "convert" %}
+      <div class="result">
+        {% if result.error %}
+          <p class="error">{{ result.error }}</p>
+        {% else %}
           <p>📅 تاریخ شمسی: <strong>{{ result.shamsi }}</strong></p>
           <p>📆 تاریخ میلادی: <strong>{{ result.miladi }}</strong></p>
           <p>🌙 تاریخ قمری: <strong>{{ result.hijri }}</strong></p>
@@ -88,8 +62,54 @@
           {% if result.age %}
             <p>🎂 سن دقیق: <strong>{{ result.age }}</strong></p>
           {% endif %}
-        </div>
-      {% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <!-- فرم امروز -->
+    <form method="POST">
+      <input type="hidden" name="action" value="today">
+      <div class="buttons">
+        <button type="submit">📅 امروز</button>
+      </div>
+    </form>
+
+    {% if result and result.action == "today" %}
+      <div class="result">
+        {% if result.error %}
+          <p class="error">{{ result.error }}</p>
+        {% else %}
+          <p>📌 {{ result.today_text }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <!-- فرم دریافت اوقات شرعی -->
+    <form method="POST">
+      <input type="hidden" name="action" value="prayer">
+      <div class="row">
+        <label for="city">نام شهر:</label>
+        <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
+      </div>
+      <div class="buttons">
+        <button type="submit">🕌 اوقات شرعی</button>
+      </div>
+    </form>
+
+    {% if result and result.action == "prayer" %}
+      <div class="result">
+        {% if result.error %}
+          <p class="error">{{ result.error }}</p>
+        {% else %}
+          <h3>🕌 اوقات شرعی امروز در {{ result.city_name }}</h3>
+          <p>اذان صبح: {{ result.prayer_times.Fajr }}</p>
+          <p>طلوع آفتاب: {{ result.prayer_times.Sunrise }}</p>
+          <p>اذان ظهر: {{ result.prayer_times.Dhuhr }}</p>
+          <p>اذان عصر: {{ result.prayer_times.Asr }}</p>
+          <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
+          <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
+        {% endif %}
+      </div>
     {% endif %}
   </div>
 </body>
