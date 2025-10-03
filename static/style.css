@@ -45,6 +45,10 @@ form {
   animation: fadeIn 0.4s ease-in-out;
 }
 
+.hidden {
+  display: none;
+}
+
 .row {
   margin-bottom: 16px;
   text-align: right;
