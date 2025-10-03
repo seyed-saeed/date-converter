@@ -64,9 +64,11 @@ def convert_date():
         action = request.form.get("action")
 
         if action == "today":
+            result["action"] = "today"
             result["today_text"] = get_today_info()
 
         elif action == "prayer":
+            result["action"] = "prayer"
             city = request.form.get("city", "").strip()
             if city:
                 times = get_prayer_times(city)
@@ -78,7 +80,8 @@ def convert_date():
             else:
                 result["error"] = "لطفاً نام شهر را وارد کنید."
 
-        else:
+        elif action == "convert":
+            result["action"] = "convert"
             try:
                 year = extract_number(request.form['year'])
                 month = extract_number(request.form['month'])
@@ -104,17 +107,17 @@ def convert_date():
                 delta = relativedelta(today, miladi_date)
                 age_precise = f"{delta.years} سال، {delta.months} ماه، {delta.days} روز"
 
-                result = {
+                result.update({
                     'shamsi': f"{shamsi_date.year}/{shamsi_months[shamsi_date.month]}/{shamsi_date.day}",
                     'miladi': miladi_date.strftime('%Y/%m/%d'),
                     'hijri': hijri_str,
                     'weekday': weekday_combined,
                     'age_days': age_days,
                     'age': age_precise
-                }
+                })
 
             except Exception:
-                result = {'error': 'تاریخ وارد شده معتبر نیست!'}
+                result["error"] = "تاریخ وارد شده معتبر نیست!"
 
     return render_template('index.html', years=years, days=days, shamsi_months=shamsi_months, result=result)
 
