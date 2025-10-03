@@ -3,3 +3,4 @@ jdatetime
 hijri-converter
 gunicorn
 python-dateutil
+requests
