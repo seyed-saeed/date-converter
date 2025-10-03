@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>تبدیل تاریخ شمسی به میلادی و قمری | ابزار آنلاین</title>
-  <meta name="description" content="تبدیل دقیق تاریخ شمسی به میلادی و قمری با محاسبه سن و نمایش روز هفته. ابزار رایگان و سریع برای همه.">
-  <meta name="keywords" content="تبدیل تاریخ, شمسی به میلادی, تاریخ قمری, محاسبه سن, تقویم فارسی">
+  <title>تبدیل تاریخ و اوقات شرعی | ابزار آنلاین</title>
+  <meta name="description" content="تبدیل تاریخ شمسی به میلادی و قمری + محاسبه سن + نمایش اوقات شرعی امروز.">
+  <meta name="keywords" content="تبدیل تاریخ, شمسی, میلادی, قمری, اوقات شرعی, اذان, تقویم فارسی">
   <meta name="author" content="Seyed Saeed">
   <link rel="stylesheet" href="static/style.css">
   <link rel="icon" href="static/favicon.ico" type="image/x-icon">
 </head>
 <body>
   <div class="container">
-    <h1>تبدیل تاریخ شمسی به میلادی و قمری</h1>
+    <h1>تبدیل تاریخ و اوقات شرعی</h1>
 
+    <!-- فرم تبدیل تاریخ -->
     <form method="POST">
       <div class="row">
         <label for="year">سال:</label>
@@ -48,12 +49,34 @@
       </div>
     </form>
 
+    <!-- فرم دریافت اوقات شرعی -->
+    <form method="POST">
+      <div class="row">
+        <label for="city">نام شهر:</label>
+        <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
+      </div>
+      <div class="buttons">
+        <button type="submit" name="action" value="prayer">🕌 اوقات شرعی</button>
+      </div>
+    </form>
+
+    <!-- نمایش نتایج -->
     {% if result %}
       {% if result.error %}
         <p class="error">{{ result.error }}</p>
       {% elif result.today_text %}
         <div class="result">
           <p>📌 {{ result.today_text }}</p>
+        </div>
+      {% elif result.prayer_times %}
+        <div class="result">
+          <h3>🕌 اوقات شرعی امروز در {{ result.city_name }}</h3>
+          <p>اذان صبح: {{ result.prayer_times.Fajr }}</p>
+          <p>طلوع آفتاب: {{ result.prayer_times.Sunrise }}</p>
+          <p>اذان ظهر: {{ result.prayer_times.Dhuhr }}</p>
+          <p>اذان عصر: {{ result.prayer_times.Asr }}</p>
+          <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
+          <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
         </div>
       {% else %}
         <div class="result">
