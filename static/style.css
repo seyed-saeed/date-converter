@@ -46,7 +46,7 @@ form {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .row {
@@ -59,7 +59,7 @@ form {
 .row-horizontal {
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 16px;
   margin-bottom: 16px;
 }
 
