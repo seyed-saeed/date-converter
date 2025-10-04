@@ -44,36 +44,75 @@
     </ul>
   </div>
 
+  <!-- فرم تبدیل تاریخ با گزینه‌های انتخاب نوع -->
   <div class="container">
     <h1>تبدیل تاریخ و اوقات شرعی</h1>
 
-    <!-- فرم تبدیل تاریخ -->
     <form method="POST">
       <input type="hidden" name="action" value="convert">
       <div class="row">
-        <label for="year">سال:</label>
-        <select name="year" id="year">
-          {% for y in years %}
+        <label>نوع تبدیل:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="mode" value="shamsi" checked onchange="updateFields()"> شمسی → میلادی و قمری</label>
+          <label><input type="radio" name="mode" value="miladi" onchange="updateFields()"> میلادی → شمسی و قمری</label>
+          <label><input type="radio" name="mode" value="hijri" onchange="updateFields()"> قمری → شمسی و میلادی</label>
+        </div>
+      </div>
+
+      <div class="row-horizontal" id="shamsi-fields">
+        <select name="year">
+          {% for y in years_shamsi %}
             <option value="{{ y }}">{{ y }}</option>
           {% endfor %}
         </select>
-      </div>
-      <div class="row">
-        <label for="month">ماه:</label>
-        <select name="month" id="month">
+        <select name="month">
           {% for num, name in shamsi_months.items() %}
             <option value="{{ num }}">{{ name }}</option>
           {% endfor %}
         </select>
-      </div>
-      <div class="row">
-        <label for="day">روز:</label>
-        <select name="day" id="day">
+        <select name="day">
           {% for d in days %}
             <option value="{{ d }}">{{ d }}</option>
           {% endfor %}
         </select>
       </div>
+
+      <div class="row-horizontal hidden" id="miladi-fields">
+        <select name="year_m">
+          {% for y in years_miladi %}
+            <option value="{{ y }}">{{ y }}</option>
+          {% endfor %}
+        </select>
+        <select name="month_m">
+          {% for num, name in miladi_months.items() %}
+            <option value="{{ num }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <select name="day_m">
+          {% for d in days %}
+            <option value="{{ d }}">{{ d }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="row-horizontal hidden" id="hijri-fields">
+        <select name="year_h">
+          {% for y in years_hijri %}
+            <option value="{{ y }}">{{ y }}</option>
+          {% endfor %}
+        </select>
+        <select name="month_h">
+          {% for num, name in hijri_months.items() %}
+            <option value="{{ num }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <select name="day_h">
+          {% for d in days %}
+            <option value="{{ d }}">{{ d }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
       <div class="buttons">
         <button type="submit">🔄 تبدیل</button>
       </div>
@@ -84,13 +123,15 @@
         {% if result.error %}
           <p class="error">{{ result.error }}</p>
         {% else %}
-          <p>📅 تاریخ شمسی: <strong>{{ result.shamsi }}</strong></p>
-          <p>📆 تاریخ میلادی: <strong>{{ result.miladi }}</strong></p>
-          <p>🌙 تاریخ قمری: <strong>{{ result.hijri }}</strong></p>
-          <p>🗓 روز هفته: <strong>{{ result.weekday }}</strong></p>
-          <p>🪐 نماد ماه: <strong>{{ result.month_symbol }}</strong></p>
-          <p>📆 تعداد روزهای گذشته: <strong>{{ result.age_days }}</strong> روز</p>
-          <p>🎂 سن دقیق: <strong>{{ result.age }}</strong></p>
+          {% if result.shamsi %}<p>📅 تاریخ شمسی: <strong>{{ result.shamsi }}</strong></p>{% endif %}
+          {% if result.miladi %}<p>📆 تاریخ میلادی: <strong>{{ result.miladi }}</strong></p>{% endif %}
+          {% if result.hijri %}<p>🌙 تاریخ قمری: <strong>{{ result.hijri }}</strong></p>{% endif %}
+          {% if result.weekday %}<p>🗓 روز هفته: <strong>{{ result.weekday }}</strong></p>{% endif %}
+          {% if result.age_days %}<p>📆 تعداد روزهای گذشته: <strong>{{ result.age_days }}</strong> روز</p>{% endif %}
+          {% if result.age %}<p>🎂 سن دقیق: <strong>{{ result.age }}</strong></p>{% endif %}
+          {% if result.month_symbol %}<p>🪐 نماد ماه شمسی: <strong>{{ result.month_symbol }}</strong></p>{% endif %}
+          {% if result.hijri_symbol %}<p>🌙 نماد ماه قمری: <strong>{{ result.hijri_symbol }}</strong></p>{% endif %}
+          {% if result.miladi_zodiac %}<p>♉ Zodiac Sign: <strong>{{ result.miladi_zodiac }}</strong></p>{% endif %}
         {% endif %}
       </div>
     {% endif %}
@@ -109,7 +150,7 @@
           <p class="error">{{ result.error }}</p>
         {% else %}
           <p>📌 {{ result.today_text }}</p>
-          <p>🌙 تاریخ قمری: <strong>{{ result.hijri_today }}</strong></p>
+                    <p>🌙 تاریخ قمری: <strong>{{ result.hijri_today }}</strong></p>
         {% endif %}
       </div>
     {% endif %}
@@ -155,8 +196,24 @@
       document.getElementById("prayer-wrapper").classList.remove("hidden");
     }
 
+    function updateFields() {
+      const mode = document.querySelector('input[name="mode"]:checked').value;
+      document.getElementById("shamsi-fields").classList.add("hidden");
+      document.getElementById("miladi-fields").classList.add("hidden");
+      document.getElementById("hijri-fields").classList.add("hidden");
+
+      if (mode === "shamsi") {
+        document.getElementById("shamsi-fields").classList.remove("hidden");
+      } else if (mode === "miladi") {
+        document.getElementById("miladi-fields").classList.remove("hidden");
+      } else if (mode === "hijri") {
+        document.getElementById("hijri-fields").classList.remove("hidden");
+      }
+    }
+
     window.addEventListener("load", function () {
       document.getElementById("spinner").style.display = "none";
+      updateFields();
     });
   </script>
 </body>
