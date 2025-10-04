@@ -82,17 +82,19 @@
       <button type="button" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
     </div>
 
-    <!-- فرم مخفی اوقات شرعی -->
-    <form method="POST" id="prayer-form" class="hidden">
-      <input type="hidden" name="action" value="prayer">
-      <div class="row">
-        <label for="city">نام شهر:</label>
-        <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
-      </div>
-      <div class="buttons">
-        <button type="submit">✅ تأیید</button>
-      </div>
-    </form>
+    <!-- فرم مخفی اوقات شرعی که زیر دکمه ظاهر می‌شود -->
+    <div id="prayer-wrapper" class="hidden">
+      <form method="POST" id="prayer-form">
+        <input type="hidden" name="action" value="prayer">
+        <div class="row">
+          <label for="city">نام شهر:</label>
+          <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
+        </div>
+        <div class="buttons">
+          <button type="submit">✅ تأیید</button>
+        </div>
+      </form>
+    </div>
 
     {% if result and result.action == "prayer" %}
       <div class="result">
@@ -113,7 +115,7 @@
 
   <script>
     function showPrayerForm() {
-      document.getElementById("prayer-form").classList.remove("hidden");
+      document.getElementById("prayer-wrapper").classList.remove("hidden");
     }
   </script>
 </body>
