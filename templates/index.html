@@ -9,14 +9,10 @@
 <body>
   <div id="spinner" class="spinner-wrapper">
     <div class="spinner"></div>
-    <p class="loading-text">در حال آماده‌سازی سایت، لطفاً صبور باشید... ☕</p>
-    <ul class="tips-list">
-      <li>📅 تبدیل تاریخ شمسی، میلادی، قمری فقط با یک کلیک</li>
-      <li>🕌 دریافت اوقات شرعی دقیق برای هر شهر ایران</li>
-      <li>🎂 محاسبه سن دقیق بر اساس تاریخ تولد</li>
-      <li>🪐 نمایش نماد ماه تولد به سبک ایرانی، عربی و غربی</li>
-      <li>📆 نمایش روز هفته به سه زبان: فارسی، انگلیسی، عربی</li>
-    </ul>
+    <p class="loading-text">در حال انتقال سایت، لطفاً صبور باشید…</p>
+    <div class="tip-box">
+      <p id="tip-text" class="tip-show">⏳ آماده‌سازی سرور در حال انجام است…</p>
+    </div>
   </div>
 
   <div class="container">
@@ -162,30 +158,95 @@
     {% endif %}
   </div>
 
-  <script>
-    function showPrayerForm() {
-      document.getElementById("prayer-wrapper").classList.remove("hidden");
+<script>
+  function showPrayerForm() {
+    document.getElementById("prayer-wrapper").classList.remove("hidden");
+  }
+
+  function updateFields() {
+    const mode = document.querySelector('input[name="mode"]:checked').value;
+    document.getElementById("shamsi-fields").classList.add("hidden");
+    document.getElementById("miladi-fields").classList.add("hidden");
+    document.getElementById("hijri-fields").classList.add("hidden");
+
+    if (mode === "shamsi") {
+      document.getElementById("shamsi-fields").classList.remove("hidden");
+    } else if (mode === "miladi") {
+      document.getElementById("miladi-fields").classList.remove("hidden");
+    } else if (mode === "hijri") {
+      document.getElementById("hijri-fields").classList.remove("hidden");
     }
+  }
 
-    function updateFields() {
-      const mode = document.querySelector('input[name="mode"]:checked').value;
-      document.getElementById("shamsi-fields").classList.add("hidden");
-      document.getElementById("miladi-fields").classList.add("hidden");
-      document.getElementById("hijri-fields").classList.add("hidden");
+  const tips = [
+    "📅 تبدیل تاریخ شمسی، میلادی، قمری فقط با یک کلیک",
+    "🕌 دریافت اوقات شرعی دقیق برای هر شهر ایران",
+    "🎂 محاسبه سن دقیق بر اساس تاریخ تولد",
+    "🪐 نمایش نماد ماه تولد به سبک ایرانی، عربی و غربی",
+    "📆 نمایش روز هفته به سه زبان: فارسی، انگلیسی، عربی",
+    "🧠 معمای روز: اگر امروز جمعه باشد، ۵ روز بعد چه روزی‌ست؟",
+    "📜 تبدیل تاریخ به حروف فارسی کامل",
+    "🕋 نمایش تاریخ هجری قمری با نماد عربی",
+    "🧭 نمایش موقعیت جغرافیایی شهر انتخاب‌شده",
+    "🧮 محاسبه فاصله بین دو تاریخ",
+    "🧘 نمایش نماد ماه تولد بر اساس طالع‌بینی ایرانی",
+    "🧩 معما: اگر ۳ روز قبل دیروز، شنبه بوده باشد، امروز چه روزی‌ست؟",
+    "📈 نمایش روند تغییر تاریخ در تقویم‌های مختلف",
+    "🕰️ تبدیل ساعت جهانی به ساعت ایران",
+    "🧠 معما: اگر فردا دیروزِ پس‌فردا باشد، امروز چه روزی‌ست؟",
+    "📖 نمایش مناسبت‌های روز در تقویم رسمی",
+    "🧠 معما: اگر امروز دوشنبه باشد، ۱۰ روز قبل چه روزی بوده؟",
+    "🧠 معما: اگر دیروز فردا باشد، امروز چه روزی‌ست؟",
+    "🧠 معما: اگر امروز روزی قبل از جمعه باشد، چه روزی‌ست؟",
+    "🧠 معما: اگر ۲ روز بعد از فردا، شنبه باشد، امروز چه روزی‌ست؟",
+    "🧠 معما: اگر دیروز، روزی قبل از پنج‌شنبه باشد، امروز چه روزی‌ست؟",
+    "🧠 معما: اگر امروز وسط هفته باشد، چه روزی‌ست؟",
+    "🧠 معما: اگر فردا روزی قبل از شنبه باشد، امروز چه روزی‌ست؟",
+    "🧠 معما: اگر امروز روزی بعد از سه‌شنبه باشد، چه روزی‌ست؟",
+    "🧠 معما: اگر دیروز روزی قبل از یکشنبه باشد، امروز چه روزی‌ست؟",
+    "🧠 معما: اگر امروز روزی قبل از فردا باشد، چه روزی‌ست؟",
+    "🧠 معما: اگر امروز روزی بعد از دیروز باشد، چه روزی‌ست؟",
+    "🧠 معما: اگر امروز روزی بین شنبه و دوشنبه باشد، چه روزی‌ست؟",
+    "🧠 معما: اگر امروز روزی قبل از روزی قبل از جمعه باشد، چه روزی‌ست؟"
+  ];
 
-      if (mode === "shamsi") {
-        document.getElementById("shamsi-fields").classList.remove("hidden");
-      } else if (mode === "miladi") {
-        document.getElementById("miladi-fields").classList.remove("hidden");
-      } else if (mode === "hijri") {
-        document.getElementById("hijri-fields").classList.remove("hidden");
+  let shuffledTips = [];
+  let currentIndex = 0;
+  const tipText = document.getElementById("tip-text");
+
+  function shuffleTips() {
+    shuffledTips = [...tips];
+    for (let i = shuffledTips.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffledTips[i], shuffledTips[j]] = [shuffledTips[j], shuffledTips[i]];
+    }
+    currentIndex = 0;
+  }
+
+  function showNextTip() {
+    tipText.classList.remove("tip-show");
+    tipText.classList.add("tip-fade");
+
+    setTimeout(() => {
+      if (currentIndex >= shuffledTips.length) {
+        shuffleTips();
       }
-    }
+      tipText.textContent = shuffledTips[currentIndex];
+      currentIndex++;
+      tipText.classList.remove("tip-fade");
+      tipText.classList.add("tip-show");
+    }, 1000);
+  }
 
-    window.addEventListener("load", function () {
+  shuffleTips();
+  setInterval(showNextTip, 10000);
+
+  window.addEventListener("load", function () {
+    setTimeout(function () {
       document.getElementById("spinner").style.display = "none";
       updateFields();
-    });
-  </script>
+    }, 60000);
+  });
+</script>
 </body>
 </html>
