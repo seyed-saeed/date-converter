@@ -7,14 +7,6 @@
   <link rel="stylesheet" href="static/style.css">
 </head>
 <body>
-  <div id="spinner" class="spinner-wrapper">
-    <div class="spinner"></div>
-    <p class="loading-text">در حال انتقال سایت، لطفاً صبور باشید…</p>
-    <div class="tip-box">
-      <p id="tip-text" class="tip-show">⏳ آماده‌سازی سرور در حال انجام است…</p>
-    </div>
-  </div>
-
   <div class="container">
     <h1>تبدیل تاریخ و اوقات شرعی</h1>
 
@@ -157,6 +149,7 @@
       </div>
     {% endif %}
   </div>
+
 <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
@@ -178,7 +171,7 @@
   }
 
   window.addEventListener("load", function () {
-    updateFields(); // فقط فرم رو آماده می‌کنیم
+    updateFields();
   });
 </script>
 </body>
