@@ -5,10 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>تبدیل تاریخ شمسی، میلادی، قمری + اوقات شرعی آنلاین</title>
   <link rel="stylesheet" href="static/style.css">
+  <style>
+    #type-title {
+      font-size: 2rem;
+      font-weight: bold;
+      color: #0077cc;
+      text-align: center;
+      margin-bottom: 30px;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid #0077cc;
+      animation: blink 0.8s infinite;
+      backdrop-filter: blur(12px);
+      background-color: rgba(255, 255, 255, 0.25);
+      padding: 12px 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      display: inline-block;
+    }
+
+    @keyframes blink {
+      0%, 100% { border-color: transparent; }
+      50% { border-color: #0077cc; }
+    }
+  </style>
 </head>
 <body>
   <div class="container">
-    <h1>تبدیل تاریخ و اوقات شرعی</h1>
+    <h1 id="type-title"></h1>
 
     <form method="POST">
       <input type="hidden" name="action" value="convert">
@@ -170,8 +194,19 @@
     }
   }
 
+  const titleText = "تبدیل تاریخ و اوقات شرعی";
+  let i = 0;
+  function typeTitle() {
+    if (i < titleText.length) {
+      document.getElementById("type-title").innerHTML += titleText.charAt(i);
+      i++;
+      setTimeout(typeTitle, 100);
+    }
+  }
+
   window.addEventListener("load", function () {
     updateFields();
+    typeTitle();
   });
 </script>
 </body>
