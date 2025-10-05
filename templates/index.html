@@ -245,27 +245,11 @@
     const spinner = document.getElementById("spinner");
     spinner.style.display = "block";
 
-    fetch("/status")
-      .then(res => res.json())
-      .then(data => {
-        if (data.ready) {
-          spinner.style.display = "none";
-          updateFields();
-        } else {
-          setTimeout(() => {
-            spinner.style.display = "none";
-            updateFields();
-          }, 60000);
-        }
-      })
-      .catch(() => {
-        setTimeout(() => {
-          spinner.style.display = "none";
-          updateFields();
-        }, 60000);
-      });
+    setTimeout(() => {
+      spinner.style.display = "none";
+      updateFields();
+    }, 5000); // نمایش اسپینر به مدت ۵ ثانیه
   });
 </script>
-
 </body>
 </html>
