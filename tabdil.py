@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import jdatetime
 from hijri_converter import convert
 import datetime
@@ -26,8 +26,9 @@ persian_zodiac = {
 hijri_symbols = {
     1: "🗡️ الشجاعة", 2: "🧭 الرحلة", 3: "🌸 النمو", 4: "🪴 السلام",
     5: "🧱 الثبات", 6: "🧤 العناية", 7: "🕊️ الروحانية", 8: "🎁 الكرم",
-    9: "🔥 التطهير", 10: "🎉 التجديد", 11: "🧘 الهدوء", 12: "🕋 العبادة"
+    9: "🔥 التطهير", 10: "🎉 التجدید", 11: "🧘 الهدوء", 12: "🕋 العبادة"
 }
+
 # نماد طالع‌بینی میلادی
 zodiac_signs = [
     {"name": "Capricorn", "symbol": "♑", "start": (12, 22), "end": (1, 19)},
@@ -86,6 +87,12 @@ def get_prayer_times(city="Mashhad"):
     except:
         return None
 
+@app.route('/status')
+def server_status():
+    response = jsonify({"ready": True})
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
 @app.route('/', methods=['GET', 'POST'])
 def convert_date():
     result = {}
@@ -141,12 +148,12 @@ def convert_date():
                     year = int(request.form['year_h'])
                     month = int(request.form['month_h'])
                     day = int(request.form['day_h'])
-    # تبدیل تاریخ قمری به میلادی
                     hijri_date = convert.Hijri(year, month, day)
                     miladi_gregorian = hijri_date.to_gregorian()
                     miladi_date = datetime.date(miladi_gregorian.year, miladi_gregorian.month, miladi_gregorian.day)
-    # تبدیل میلادی به شمسی
                     shamsi_date = jdatetime.date.fromgregorian(date=miladi_date)
+
+
                 # محاسبه تاریخ قمری
                 hijri = convert.Gregorian(miladi_date.year, miladi_date.month, miladi_date.day).to_hijri()
                 hijri_month_name = hijri_months.get(hijri.month, "نامشخص")
@@ -209,4 +216,3 @@ def convert_date():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
