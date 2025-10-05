@@ -242,10 +242,27 @@
   setInterval(showNextTip, 10000);
 
   window.addEventListener("load", function () {
-    setTimeout(function () {
-      document.getElementById("spinner").style.display = "none";
-      updateFields();
-    }, 60000);
+    const spinner = document.getElementById("spinner");
+
+    fetch("/status")
+      .then(res => res.json())
+      .then(data => {
+        if (data.ready) {
+          spinner.style.display = "none";
+          updateFields();
+        } else {
+          setTimeout(() => {
+            spinner.style.display = "none";
+            updateFields();
+          }, 60000);
+        }
+      })
+      .catch(() => {
+        setTimeout(() => {
+          spinner.style.display = "none";
+          updateFields();
+        }, 60000);
+      });
   });
 </script>
 </body>
