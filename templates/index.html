@@ -157,7 +157,6 @@
       </div>
     {% endif %}
   </div>
-
 <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
@@ -243,6 +242,7 @@
 
   window.addEventListener("load", function () {
     const spinner = document.getElementById("spinner");
+    spinner.style.display = "block"; // نمایش اسپینر بلافاصله
 
     fetch("/status")
       .then(res => res.json())
