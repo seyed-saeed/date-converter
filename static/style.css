@@ -183,10 +183,11 @@ button:hover {
   font-weight: bold;
   color: #0077cc;
   text-align: center;
-  margin: 0 auto 30px auto;
+  margin: 0 auto 30px auto; /* وسط‌چین افقی */
   display: block;
   max-width: 100%;
 }
+
 
 /* چشمک‌زن برای نشانگر تایپ */
 @keyframes blink-cursor {
