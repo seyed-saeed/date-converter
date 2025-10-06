@@ -173,6 +173,31 @@ button:hover {
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* افکت تایپ ماشینی برای عنوان */
+#type-title {
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #0077cc;
+  animation: blink-cursor 0.8s infinite;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #0077cc;
+  text-align: center;
+  margin-bottom: 30px;
+  display: inline-block;
+  max-width: 100%;
+}
+
+/* چشمک‌زن برای نشانگر تایپ */
+@keyframes blink-cursor {
+  0%, 100% {
+    border-color: transparent;
+  }
+  50% {
+    border-color: #0077cc;
+  }
+}
+
 @media screen and (max-width: 480px) {
   body {
     padding: 10px;
@@ -195,22 +220,8 @@ button:hover {
   .result {
     font-size: 0.95rem;
   }
-/* افکت تایپ ماشینی برای عنوان */
-#type-title {
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid #0077cc;
-  animation: blink-cursor 0.8s infinite;
-}
 
-/* چشمک‌زن برای نشانگر تایپ */
-@keyframes blink-cursor {
-  0%, 100% {
-    border-color: transparent;
+  #type-title {
+    font-size: 1.2rem;
   }
-  50% {
-    border-color: #0077cc;
-  }
-}
-
 }
