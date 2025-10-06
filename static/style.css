@@ -175,18 +175,24 @@ button:hover {
 
 /* افکت تایپ ماشینی برای عنوان */
 #type-title {
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid #0077cc;
-  animation: blink-cursor 0.8s infinite;
   font-size: 2.8rem;
   font-weight: bold;
   color: #0077cc;
   text-align: center;
   margin: 0 auto 30px auto; /* وسط‌چین افقی */
-  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #0077cc;
+  animation: blink 0.8s infinite;
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: block; /* از inline-block به block تغییر کن */
   max-width: 100%;
 }
+
 
 
 /* چشمک‌زن برای نشانگر تایپ */
