@@ -209,10 +209,19 @@
     type();
   }
 
-  window.addEventListener("load", function () {
-    updateFields();
+window.addEventListener("load", function () {
+  updateFields();
+
+  {% if result and result.action == "convert" %}
     typeTitle("تبدیل تاریخ");
-  });
+  {% elif result and result.action == "today" %}
+    typeTitle("تاریخ امروز");
+  {% elif result and result.action == "prayer" %}
+    typeTitle("اوقات شرعی امروز");
+  {% else %}
+    typeTitle("تبدیل تاریخ");
+  {% endif %}
+});
 </script>
 </body>
 </html>
