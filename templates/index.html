@@ -132,16 +132,18 @@
       </div>
     </form>
 
-    {% if result and result.action == "today" %}
-      <div class="result">
-        {% if result.error %}
-          <p class="error">{{ result.error }}</p>
-        {% else %}
-          <p>📌 {{ result.today_text }}</p>
-          <p>🌙 تاریخ قمری: <strong>{{ result.hijri_today }}</strong></p>
-        {% endif %}
-      </div>
+{% if result and result.action == "today" %}
+  <div class="result">
+    {% if result.error %}
+      <p class="error">{{ result.error }}</p>
+    {% else %}
+      <p>📌 {{ result.today_text }}</p>
+      <p>🌙 تاریخ قمری: <strong>{{ result.hijri_today }}</strong></p>
+      <div id="clock" class="clock-box"></div>  <!-- ساعت زنده -->
     {% endif %}
+  </div>
+{% endif %}
+
 
     <div class="buttons">
       <button type="button" onclick="showPrayerForm(); typeTitle('اوقات شرعی امروز')">🕌 اوقات شرعی</button>
@@ -221,9 +223,23 @@ window.addEventListener("load", function () {
   {% elif result and result.action == "prayer" %}
     typeTitle("اوقات شرعی");
   {% else %}
-    typeTitle("📅 تاریخ‌یار");
+    typeTitle("تاریخ‌یار");
   {% endif %}
 });
+  function updateClock() {
+  const now = new Date();
+  const time = now.toLocaleTimeString('fa-IR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+  });
+  const clock = document.getElementById("clock");
+  if (clock) {
+    clock.innerHTML = `🕒 ساعت فعلی: ${time}`;
+  }
+}
+setInterval(updateClock, 1000);
+updateClock();
 </script>
 </body>
 </html>
