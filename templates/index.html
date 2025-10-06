@@ -7,11 +7,11 @@
   <link rel="stylesheet" href="static/style.css">
   <style>
     #type-title {
-      font-size: 2rem;
+      font-size: 2.8rem;
       font-weight: bold;
       color: #0077cc;
       text-align: center;
-      margin-bottom: 30px;
+      margin: 0 auto 30px auto;
       white-space: nowrap;
       overflow: hidden;
       border-right: 3px solid #0077cc;
@@ -21,7 +21,8 @@
       padding: 12px 20px;
       border-radius: 12px;
       box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      display: inline-block;
+      display: block;
+      max-width: 100%;
     }
 
     @keyframes blink {
@@ -34,7 +35,7 @@
   <div class="container">
     <h1 id="type-title"></h1>
 
-    <form method="POST">
+    <form method="POST" onsubmit="typeTitle('تبدیل تاریخ')">
       <input type="hidden" name="action" value="convert">
       <div class="row">
         <label>نوع تبدیل:</label>
@@ -122,7 +123,7 @@
       </div>
     {% endif %}
 
-    <form method="POST">
+    <form method="POST" onsubmit="typeTitle('تاریخ امروز')">
       <input type="hidden" name="action" value="today">
       <div class="buttons">
         <button type="submit">📅 امروز</button>
@@ -141,11 +142,11 @@
     {% endif %}
 
     <div class="buttons">
-      <button type="button" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
+      <button type="button" onclick="showPrayerForm(); typeTitle('اوقات شرعی امروز')">🕌 اوقات شرعی</button>
     </div>
 
     <div id="prayer-wrapper" class="hidden">
-      <form method="POST" id="prayer-form">
+      <form method="POST" id="prayer-form" onsubmit="typeTitle('اوقات شرعی امروز')">
         <input type="hidden" name="action" value="prayer">
         <div class="row">
           <label for="city">نام شهر:</label>
@@ -194,19 +195,23 @@
     }
   }
 
-  const titleText = "تبدیل تاریخ";
-  let i = 0;
-  function typeTitle() {
-    if (i < titleText.length) {
-      document.getElementById("type-title").innerHTML += titleText.charAt(i);
-      i++;
-      setTimeout(typeTitle, 100);
+  function typeTitle(text) {
+    const titleEl = document.getElementById("type-title");
+    titleEl.innerHTML = "";
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        titleEl.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, 100);
+      }
     }
+    type();
   }
 
   window.addEventListener("load", function () {
     updateFields();
-    typeTitle();
+    typeTitle("تبدیل تاریخ");
   });
 </script>
 </body>
