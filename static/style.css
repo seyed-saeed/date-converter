@@ -105,6 +105,7 @@ label {
 }
 
 button {
+  font-family: 'Vazir', sans-serif;
   padding: 12px;
   background: linear-gradient(to right, #0077cc, #00aaff);
   color: white;
@@ -120,6 +121,7 @@ button {
 }
 
 button::after {
+  font-family: 'Vazir', sans-serif;
   content: "";
   position: absolute;
   top: 0;
