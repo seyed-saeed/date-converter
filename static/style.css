@@ -121,7 +121,6 @@ button {
 }
 
 button::after {
-  font-family: 'Vazir', sans-serif;
   content: "";
   position: absolute;
   top: 0;
