@@ -246,42 +246,6 @@
     {% else %}
       typeTitle("تاریخ‌یار");
     {% endif %}
-
-    const input = document.getElementById("city");
-    const suggestionBox = document.createElement("ul");
-    suggestionBox.className = "suggestion-list";
-    suggestionBox.style.position = "absolute";
-    suggestionBox.style.background = "#fff";
-    suggestionBox.style.border = "1px solid #ccc";
-    suggestionBox.style.width = input.offsetWidth + "px";
-    suggestionBox.style.maxHeight = "200px";
-    suggestionBox.style.overflowY = "auto";
-    suggestionBox.style.zIndex = "999";
-    suggestionBox.style.marginTop = "4px";
-    input.parentNode.style.position = "relative";
-    input.parentNode.appendChild(suggestionBox);
-
-    input.addEventListener("input", function () {
-      const value = this.value.trim();
-      suggestionBox.innerHTML = "";
-      if (value.length === 0) return;
-
-      const matches = cities.filter(city => city.startsWith(value));
-      matches.slice(0, 10).forEach(city => {
-        const li = document.createElement("li");
-        li.textContent = city;
-        li.style.padding = "8px 12px";
-        li.style.cursor = "pointer";
-        li.addEventListener("mouseover", () => li.style.backgroundColor = "#f0f0f0");
-        li.addEventListener("mouseout", () => li.style.backgroundColor = "#fff");
-        li.onclick = () => {
-          input.value = city;
-          suggestionBox.innerHTML = "";
-          fetchPrayerTimes(city);
-        };
-        suggestionBox.appendChild(li);
-      });
-    });
   });
 
   function fetchPrayerTimes(city) {
@@ -317,7 +281,6 @@
       });
   }
 </script>
-
 
 </body>
 </html>
