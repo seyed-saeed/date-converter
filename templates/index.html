@@ -184,7 +184,7 @@
   }
 
   function updateFields() {
-    const mode = document.querySelector('input[name="mode"]:checked').value;
+    const mode = document.querySelector('input[name="mode"]:checked").value;
     document.getElementById("shamsi-fields").classList.add("hidden");
     document.getElementById("miladi-fields").classList.add("hidden");
     document.getElementById("hijri-fields").classList.add("hidden");
@@ -285,7 +285,7 @@
   });
 
   function fetchPrayerTimes(city) {
-    const token = "875825:68e41b27c90e";
+    const token = "875825:68e561a9a0424";
     const url = `https://one-api.ir/owghat/?token=${token}&city=${city}&en_num=0`;
 
     fetch(url)
@@ -317,5 +317,6 @@
       });
   }
 </script>
+
 </body>
 </html>
