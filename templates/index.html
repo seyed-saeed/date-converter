@@ -181,10 +181,11 @@
 <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
+    typeTitle("اوقات شرعی"); // ✅ اضافه شد تا تایپ ماشینی اجرا بشه
   }
 
   function updateFields() {
-    const mode = document.querySelector('input[name="mode"]:checked").value;
+    const mode = document.querySelector('input[name="mode"]:checked').value;
     document.getElementById("shamsi-fields").classList.add("hidden");
     document.getElementById("miladi-fields").classList.add("hidden");
     document.getElementById("hijri-fields").classList.add("hidden");
