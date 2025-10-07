@@ -230,7 +230,7 @@
   // اوقات شرعی با لیست شهرها
   let cities = [];
 
-  fetch("/cities.json")
+  fetch("static/cities.json")
     .then(res => res.json())
     .then(data => cities = data);
 
