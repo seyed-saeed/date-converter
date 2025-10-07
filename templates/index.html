@@ -181,7 +181,6 @@
 <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
-    typeTitle("اوقات شرعی"); // ✅ اضافه شد تا تایپ ماشینی اجرا بشه
   }
 
   function updateFields() {
@@ -286,7 +285,7 @@
   });
 
   function fetchPrayerTimes(city) {
-    const token = "875825:68e561a9a0424";
+    const token = "875825:68e41b27c90e";
     const url = `https://one-api.ir/owghat/?token=${token}&city=${city}&en_num=0`;
 
     fetch(url)
@@ -318,6 +317,7 @@
       });
   }
 </script>
+
 
 </body>
 </html>
