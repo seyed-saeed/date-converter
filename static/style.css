@@ -227,38 +227,13 @@ button:hover {
   }
 }
 
-@media screen and (max-width: 480px) {
-  body {
-    padding: 10px;
-    align-items: flex-start;
-  }
-
-  .container {
-    padding: 20px;
-    margin-top: 30px;
-  }
-
-  h1 {
-    font-size: 1.4rem;
-  }
-
-  button {
-    font-size: 0.95rem;
-  }
-
-  .result {
-    font-size: 0.95rem;
-  }
-
-  #type-title {
-    font-size: 1.6rem;
-  }
+@media screen and (max-width: 360px) {
   .prayer-result {
     flex-direction: column;
   }
 
-.prayer-result p {
-  font-size: 0.95rem;
-  padding: 8px 12px;
+  .prayer-result p {
+    width: 100% !important;
+  }
 }
-}
+
