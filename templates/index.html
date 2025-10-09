@@ -204,8 +204,10 @@
     ids.forEach(id => {
       const el = document.getElementById(id);
       if (el && el.textContent.includes(":")) {
-        const timeStr = el.textContent.split(":").pop().trim();
-        times[id] = timeStr;
+        const match = el.textContent.match(/(\d{1,2}):(\d{2})/);
+        if (match) {
+          times[id] = match[0];
+        }
       }
     });
 
@@ -237,6 +239,12 @@
 
       const [hour, minute] = timeStr.split(":").map(Number);
       const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
+
+      // اگر نیمه‌شب شرعی قبل از اذان صبح باشه، روز بعد حسابش کن
+      if (key === "nimeshab" && hour < 3) {
+        target.setDate(target.getDate() + 1);
+      }
+
       const diff = target - now;
       if (diff > 0 && diff < minDiff) {
         minDiff = diff;
@@ -270,5 +278,6 @@
     const timer = setInterval(updateCountdown, 1000);
   }
 </script>
+
 </body>
 </html>
