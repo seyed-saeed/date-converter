@@ -228,7 +228,6 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // اوقات شرعی با لیست شهرها
   let cities = [];
 
   fetch("static/cities.json")
@@ -259,22 +258,22 @@
         const wrapper = document.getElementById("prayer-wrapper");
         const resultBox = document.createElement("div");
         resultBox.className = "result";
-        wrapper.innerHTML = ""; // پاک کردن نتایج قبلی
+        wrapper.innerHTML = "";
         wrapper.appendChild(resultBox);
 
         if (data.status === "success") {
           const r = data.result;
           resultBox.innerHTML = `
             <h3>🕌 اوقات شرعی امروز در ${city}</h3>
-            <p>اذان صبح: ${r.azan_sobh}</p>
-            <p>طلوع آفتاب: ${r.tolu}</p>
-            <p>اذان ظهر: ${r.azan_zohr}</p>
-            <p>غروب آفتاب: ${r.ghorub}</p>
-            <p>اذان مغرب: ${r.azan_maghreb}</p>
-            <p>نیمه‌شب شرعی: ${r.nimeshab}</p>
+            <p id="azan_sobh">اذان صبح: ${r.azan_sobh}</p>
+            <p id="tolu">طلوع آفتاب: ${r.tolu}</p>
+            <p id="azan_zohr">اذان ظهر: ${r.azan_zohr}</p>
+            <p id="ghorub">غروب آفتاب: ${r.ghorub}</p>
+            <p id="azan_maghreb">اذان مغرب: ${r.azan_maghreb}</p>
+            <p id="nimeshab">نیمه‌شب شرعی: ${r.nimeshab}</p>
             <div id="countdown" style="margin-top: 12px; font-weight: bold;"></div>
           `;
-          startCountdown(r.azan_sobh);
+          startNearestCountdown(r);
         } else {
           resultBox.innerHTML = `<p class="error">خطا در دریافت اطلاعات یا نام شهر نامعتبر است</p>`;
         }
@@ -285,28 +284,58 @@
       });
   }
 
-  function startCountdown(targetTimeStr) {
+  function startNearestCountdown(times) {
     const now = new Date();
-    const [hour, minute] = targetTimeStr.split(":").map(Number);
-    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
+    const labels = {
+      azan_sobh: "اذان صبح",
+      tolu: "طلوع آفتاب",
+      azan_zohr: "اذان ظهر",
+      ghorub: "غروب آفتاب",
+      azan_maghreb: "اذان مغرب",
+      nimeshab: "نیمه‌شب شرعی"
+    };
+
+    let nearest = null;
+    let nearestLabel = "";
+    let minDiff = Infinity;
+
+    for (const key in labels) {
+      const timeStr = times[key];
+      if (!timeStr) continue;
+      const [hour, minute] = timeStr.split(":").map(Number);
+      const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
+      const diff = target - now;
+      if (diff > 0 && diff < minDiff) {
+        minDiff = diff;
+        nearest = target;
+        nearestLabel = labels[key];
+      }
+    }
+
+    const countdownEl = document.getElementById("countdown");
+    if (!nearest) {
+      countdownEl.innerText = "🕒 همه زمان‌های شرعی امروز گذشته‌اند!";
+      return;
+    }
 
     function updateCountdown() {
-      const diff = target - new Date();
+      const diff = nearest - new Date();
       if (diff <= 0) {
-        document.getElementById("countdown").innerText = "🕒 زمان اذان صبح فرا رسیده!";
+        countdownEl.innerText = `🕒 زمان ${nearestLabel} فرا رسیده!`;
         clearInterval(timer);
         return;
       }
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      document.getElementById("countdown").innerText = `⏳ تا اذان صبح: ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
+      countdownEl.innerText = `⏳ تا ${nearestLabel}: ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
     }
 
     updateCountdown();
     const timer = setInterval(updateCountdown, 1000);
   }
 </script>
+
 
 </body>
 </html>
