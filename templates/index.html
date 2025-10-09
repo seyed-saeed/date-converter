@@ -37,7 +37,6 @@
   <div class="container">
     <h1 id="type-title"></h1>
 
-    <!-- فرم تبدیل تاریخ -->
     <form method="POST" onsubmit="typeTitle('تبدیل تاریخ')">
       <input type="hidden" name="action" value="convert">
       <div class="row">
@@ -50,21 +49,57 @@
       </div>
 
       <div class="row-horizontal" id="shamsi-fields">
-        <select name="year">{% for y in years_shamsi %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>
-        <select name="month">{% for num, name in shamsi_months.items() %}<option value="{{ num }}">{{ name }}</option>{% endfor %}</select>
-        <select name="day">{% for d in days %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>
+        <select name="year">
+          {% for y in years_shamsi %}
+            <option value="{{ y }}">{{ y }}</option>
+          {% endfor %}
+        </select>
+        <select name="month">
+          {% for num, name in shamsi_months.items() %}
+            <option value="{{ num }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <select name="day">
+          {% for d in days %}
+            <option value="{{ d }}">{{ d }}</option>
+          {% endfor %}
+        </select>
       </div>
 
       <div class="row-horizontal hidden" id="miladi-fields">
-        <select name="year_m">{% for y in years_miladi %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>
-        <select name="month_m">{% for num, name in miladi_months.items() %}<option value="{{ num }}">{{ name }}</option>{% endfor %}</select>
-        <select name="day_m">{% for d in days %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>
+        <select name="year_m">
+          {% for y in years_miladi %}
+            <option value="{{ y }}">{{ y }}</option>
+          {% endfor %}
+        </select>
+        <select name="month_m">
+          {% for num, name in miladi_months.items() %}
+            <option value="{{ num }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <select name="day_m">
+          {% for d in days %}
+            <option value="{{ d }}">{{ d }}</option>
+          {% endfor %}
+        </select>
       </div>
 
       <div class="row-horizontal hidden" id="hijri-fields">
-        <select name="year_h">{% for y in years_hijri %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>
-        <select name="month_h">{% for num, name in hijri_months.items() %}<option value="{{ num }}">{{ name }}</option>{% endfor %}</select>
-        <select name="day_h">{% for d in days %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>
+        <select name="year_h">
+          {% for y in years_hijri %}
+            <option value="{{ y }}">{{ y }}</option>
+          {% endfor %}
+        </select>
+        <select name="month_h">
+          {% for num, name in hijri_months.items() %}
+            <option value="{{ num }}">{{ name }}</option>
+          {% endfor %}
+        </select>
+        <select name="day_h">
+          {% for d in days %}
+            <option value="{{ d }}">{{ d }}</option>
+          {% endfor %}
+        </select>
       </div>
 
       <div class="buttons">
@@ -72,7 +107,24 @@
       </div>
     </form>
 
-    <!-- دکمه تاریخ امروز -->
+    {% if result and result.action == "convert" %}
+      <div class="result">
+        {% if result.error %}
+          <p class="error">{{ result.error }}</p>
+        {% else %}
+          {% if result.shamsi %}<p>📅 تاریخ شمسی: <strong>{{ result.shamsi }}</strong></p>{% endif %}
+          {% if result.miladi %}<p>📆 تاریخ میلادی: <strong>{{ result.miladi }}</strong></p>{% endif %}
+          {% if result.hijri %}<p>🌙 تاریخ قمری: <strong>{{ result.hijri }}</strong></p>{% endif %}
+          {% if result.weekday %}<p>🗓 روز هفته: <strong>{{ result.weekday }}</strong></p>{% endif %}
+          {% if result.age_days %}<p>📆 تعداد روزهای گذشته: <strong>{{ result.age_days }}</strong> روز</p>{% endif %}
+          {% if result.age %}<p>🎂 سن دقیق: <strong>{{ result.age }}</strong></p>{% endif %}
+          {% if result.month_symbol %}<p>🪐 نماد ماه شمسی: <strong>{{ result.month_symbol }}</strong></p>{% endif %}
+          {% if result.hijri_symbol %}<p>🌙 نماد ماه قمری: <strong>{{ result.hijri_symbol }}</strong></p>{% endif %}
+          {% if result.miladi_zodiac %}<p>♉ Zodiac Sign: <strong>{{ result.miladi_zodiac }}</strong></p>{% endif %}
+        {% endif %}
+      </div>
+    {% endif %}
+
     <form method="POST" onsubmit="typeTitle('تاریخ امروز')">
       <input type="hidden" name="action" value="today">
       <div class="buttons">
@@ -80,12 +132,23 @@
       </div>
     </form>
 
-    <!-- دکمه اوقات شرعی -->
+{% if result and result.action == "today" %}
+  <div class="result">
+    {% if result.error %}
+      <p class="error">{{ result.error }}</p>
+    {% else %}
+      <p>📌 {{ result.today_text }}</p>
+      <p>🌙 تاریخ قمری: <strong>{{ result.hijri_today }}</strong></p>
+      <div id="clock" class="clock-box"></div>  <!-- ساعت زنده -->
+    {% endif %}
+  </div>
+{% endif %}
+
+
     <div class="buttons">
       <button type="button" onclick="showPrayerForm(); typeTitle('اوقات شرعی امروز')">🕌 اوقات شرعی</button>
     </div>
 
-    <!-- فرم انتخاب شهر -->
     <div id="prayer-wrapper" class="hidden">
       <form method="POST" id="prayer-form" onsubmit="typeTitle('اوقات شرعی امروز')">
         <input type="hidden" name="action" value="prayer">
@@ -99,7 +162,6 @@
       </form>
     </div>
 
-    <!-- نمایش اوقات شرعی -->
     {% if result and result.action == "prayer" %}
       <div class="result">
         {% if result.error %}
@@ -112,125 +174,113 @@
           <p>اذان عصر: {{ result.prayer_times.Asr }}</p>
           <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
           <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
-          <div id="countdown" style="margin-top: 12px; font-weight: bold;"></div>
-          <script>
-            startNearestCountdown({
-              Fajr: "{{ result.prayer_times.Fajr }}",
-              Sunrise: "{{ result.prayer_times.Sunrise }}",
-              Dhuhr: "{{ result.prayer_times.Dhuhr }}",
-              Asr: "{{ result.prayer_times.Asr }}",
-              Maghrib: "{{ result.prayer_times.Maghrib }}",
-              Isha: "{{ result.prayer_times.Isha }}"
-            });
-          </script>
         {% endif %}
       </div>
     {% endif %}
   </div>
+<script>
+  function showPrayerForm() {
+    document.getElementById("prayer-wrapper").classList.remove("hidden");
+  }
 
-  <script>
-    function showPrayerForm() {
-      document.getElementById("prayer-wrapper").classList.remove("hidden");
+  function updateFields() {
+    const mode = document.querySelector('input[name="mode"]:checked').value;
+    document.getElementById("shamsi-fields").classList.add("hidden");
+    document.getElementById("miladi-fields").classList.add("hidden");
+    document.getElementById("hijri-fields").classList.add("hidden");
+
+    if (mode === "shamsi") {
+      document.getElementById("shamsi-fields").classList.remove("hidden");
+    } else if (mode === "miladi") {
+      document.getElementById("miladi-fields").classList.remove("hidden");
+    } else if (mode === "hijri") {
+      document.getElementById("hijri-fields").classList.remove("hidden");
     }
+  }
 
-    function updateFields() {
-      const mode = document.querySelector('input[name="mode"]:checked').value;
-      document.getElementById("shamsi-fields").classList.add("hidden");
-      document.getElementById("miladi-fields").classList.add("hidden");
-      document.getElementById("hijri-fields").classList.add("hidden");
-
-      if (mode === "shamsi") {
-        document.getElementById("shamsi-fields").classList.remove("hidden");
-      } else if (mode === "miladi") {
-        document.getElementById("miladi-fields").classList.remove("hidden");
-      } else if (mode === "hijri") {
-        document.getElementById("hijri-fields").classList.remove("hidden");
+  function typeTitle(text) {
+    const titleEl = document.getElementById("type-title");
+    titleEl.innerHTML = "";
+    let i = 0;
+    function type() {
+      if (i < text.length) {
+        titleEl.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, 100);
       }
     }
+    type();
+  }
 
-    function typeTitle(text) {
-      const titleEl = document.getElementById("type-title");
-      titleEl.innerHTML = "";
-      let i = 0;
-      function type() {
-        if (i < text.length) {
-          titleEl.innerHTML += text.charAt(i);
-          i++;
-          setTimeout(type, 100);
+  function updateClock() {
+    const now = new Date();
+    const time = now.toLocaleTimeString('fa-IR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+    const clock = document.getElementById("clock");
+    if (clock) {
+      clock.innerHTML = `🕒 ساعت فعلی: ${time}`;
+    }
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  // اوقات شرعی با لیست شهرها
+  let cities = [];
+
+  fetch("static/cities.json")
+    .then(res => res.json())
+    .then(data => cities = data);
+
+  window.addEventListener("load", function () {
+    updateFields();
+
+    {% if result and result.action == "convert" %}
+      typeTitle("تبدیل تاریخ");
+    {% elif result and result.action == "today" %}
+      typeTitle("تاریخ امروز");
+    {% elif result and result.action == "prayer" %}
+      typeTitle("اوقات شرعی");
+    {% else %}
+      typeTitle("تاریخ‌یار");
+    {% endif %}
+  });
+
+  function fetchPrayerTimes(city) {
+    const token = "875825:68e41b27c90e";
+    const url = `https://one-api.ir/owghat/?token=${token}&city=${city}&en_num=0`;
+
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        const wrapper = document.getElementById("prayer-wrapper");
+        const resultBox = document.createElement("div");
+        resultBox.className = "result";
+        wrapper.appendChild(resultBox);
+
+        if (data.status === "success") {
+          const r = data.result;
+          resultBox.innerHTML = `
+            <h3>🕌 اوقات شرعی امروز در ${city}</h3>
+            <p>اذان صبح: ${r.azan_sobh}</p>
+            <p>طلوع آفتاب: ${r.tolu}</p>
+            <p>اذان ظهر: ${r.azan_zohr}</p>
+            <p>غروب آفتاب: ${r.ghorub}</p>
+            <p>اذان مغرب: ${r.azan_maghreb}</p>
+            <p>نیمه‌شب شرعی: ${r.nimeshab}</p>
+          `;
+        } else {
+          resultBox.innerHTML = `<p class="error">خطا در دریافت اطلاعات یا نام شهر نامعتبر است</p>`;
         }
-      }
-      type();
-    }
-
-    function updateClock() {
-      const now = new Date();
-      const time = now.toLocaleTimeString('fa-IR', {
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit'
+      })
+      .catch(err => {
+        console.error(err);
+        alert("خطا در اتصال به سرور");
       });
-      const clock = document.getElementById("clock");
-      if (clock) {
-        clock.innerHTML = `🕒 ساعت فعلی: ${time}`;
-      }
-    }
-    setInterval(updateClock, 1000);
-    updateClock();
+  }
+</script>
 
-    function startNearestCountdown(times) {
-      const now = new Date();
-      const labels = {
-        Fajr: "اذان صبح",
-        Sunrise: "طلوع آفتاب",
-        Dhuhr: "اذان ظهر",
-        Asr: "اذان عصر",
-        Maghrib: "اذان مغرب",
-        Isha: "اذان عشاء"
-      };
-
-      let nearest = null;
-      let nearestLabel = "";
-      let minDiff = Infinity;
-
-      for (const key in times) {
-        const timeStr = times[key];
-        if (!timeStr || !timeStr.includes(":")) continue;
-
-        const [hour, minute] = timeStr.split(":").map(Number);
-        const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
-        const diff = target - now;
-
-        if (diff > 0 && diff < minDiff) {
-          minDiff = diff;
-          nearest = target;
-          nearestLabel = key;
-        }
-      }
-
-      const countdownEl = document.getElementById("countdown");
-      if (!countdownEl) return;
-
-      if (!nearest) {
-        countdownEl.innerText = "🕒 همه زمان‌های شرعی امروز گذشته‌اند!";
-        return;
-      }
-
-      function updateCountdown() {
-        const diff = nearest - new Date();
-        if (diff <= 0) {
-          countdownEl.innerText = `🕒 زمان ${labels[nearestLabel]} فرا رسیده!`;
-          clearInterval(timer);
-          return;
-        }
-        const hours = Math.floor(diff / (1000 * 60 * 60));
-        const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        countdownEl.innerText = `⏳ تا ${labels[nearestLabel]}: ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
-      }
-
-      updateCountdown();
-      const timer = setInterval(updateCountdown, 1000);
-    }
-  </script>
 </body>
 </html>
