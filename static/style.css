@@ -168,6 +168,24 @@ button:hover {
   text-align: center;
   box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
+}
+  .result {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.result p {
+  flex: 0 0 calc(50% - 12px);
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-family: 'Vazir', sans-serif;
+  font-size: 1rem;
+  text-align: right;
+  box-sizing: border-box;
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
@@ -232,21 +250,3 @@ button:hover {
   #type-title {
     font-size: 1.6rem;
   }
-}
-  .result {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-
-.result p {
-  flex: 0 0 calc(50% - 12px);
-  margin: 0;
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-family: 'Vazir', sans-serif;
-  font-size: 1rem;
-  text-align: right;
-  box-sizing: border-box;
-}
