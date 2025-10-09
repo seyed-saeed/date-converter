@@ -188,60 +188,33 @@
 <p id="nimeshab">نیمه‌شب شرعی: 00:15</p>
 <div id="countdown" style="margin-top: 12px; font-weight: bold;"></div>
 <script>
-  function showPrayerForm() {
-    document.getElementById("prayer-wrapper").classList.remove("hidden");
-  }
-
-  function updateFields() {
-    const mode = document.querySelector('input[name="mode"]:checked').value;
-    document.getElementById("shamsi-fields").classList.add("hidden");
-    document.getElementById("miladi-fields").classList.add("hidden");
-    document.getElementById("hijri-fields").classList.add("hidden");
-
-    if (mode === "shamsi") {
-      document.getElementById("shamsi-fields").classList.remove("hidden");
-    } else if (mode === "miladi") {
-      document.getElementById("miladi-fields").classList.remove("hidden");
-    } else if (mode === "hijri") {
-      document.getElementById("hijri-fields").classList.remove("hidden");
-    }
-  }
-
-  function typeTitle(text) {
-    const titleEl = document.getElementById("type-title");
-    titleEl.innerHTML = "";
-    let i = 0;
-    function type() {
-      if (i < text.length) {
-        titleEl.innerHTML += text.charAt(i);
-        i++;
-        setTimeout(type, 100);
-      }
-    }
-    type();
-  }
-
-  function updateClock() {
-    const now = new Date();
-    const time = now.toLocaleTimeString('fa-IR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    });
-    const clock = document.getElementById("clock");
-    if (clock) {
-      clock.innerHTML = `🕒 ساعت فعلی: ${time}`;
-    }
-  }
-  setInterval(updateClock, 1000);
-  updateClock();
-
   window.addEventListener("load", function () {
-    updateFields();
-    startNearestCountdown(); // فعال‌سازی شمارش معکوس از HTML
+    const times = {};
+    const ids = [
+      "azan_sobh",
+      "tolu",
+      "azan_zohr",
+      "asr",
+      "ghorub",
+      "azan_maghreb",
+      "isha",
+      "nimeshab"
+    ];
+
+    ids.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.textContent.includes(":")) {
+        const timeStr = el.textContent.split(":").pop().trim();
+        times[id] = timeStr;
+      }
+    });
+
+    if (Object.keys(times).length > 0) {
+      startNearestCountdown(times);
+    }
   });
 
-  function startNearestCountdown(times = null) {
+  function startNearestCountdown(times) {
     const now = new Date();
     const labels = {
       azan_sobh: "اذان صبح",
@@ -258,14 +231,8 @@
     let nearestLabel = "";
     let minDiff = Infinity;
 
-    for (const key in labels) {
-      let timeStr = times?.[key];
-      if (!timeStr || !timeStr.includes(":")) {
-        const el = document.getElementById(key);
-        if (el && el.textContent.includes(":")) {
-          timeStr = el.textContent.split(":").pop().trim();
-        }
-      }
+    for (const key in times) {
+      const timeStr = times[key];
       if (!timeStr || !timeStr.includes(":")) continue;
 
       const [hour, minute] = timeStr.split(":").map(Number);
@@ -274,7 +241,7 @@
       if (diff > 0 && diff < minDiff) {
         minDiff = diff;
         nearest = target;
-        nearestLabel = labels[key];
+        nearestLabel = key;
       }
     }
 
@@ -289,20 +256,22 @@
     function updateCountdown() {
       const diff = nearest - new Date();
       if (diff <= 0) {
-        countdownEl.innerText = `🕒 زمان ${nearestLabel} فرا رسیده!`;
+        countdownEl.innerText = `🕒 زمان ${labels[nearestLabel]} فرا رسیده!`;
         clearInterval(timer);
         return;
       }
       const hours = Math.floor(diff / (1000 * 60 * 60));
       const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-      countdownEl.innerText = `⏳ تا ${nearestLabel}: ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
+      countdownEl.innerText = `⏳ تا ${labels[nearestLabel]}: ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
     }
 
     updateCountdown();
     const timer = setInterval(updateCountdown, 1000);
   }
 </script>
+
+
 
 </body>
 </html>
