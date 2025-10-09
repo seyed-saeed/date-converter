@@ -38,7 +38,47 @@
     <h1 id="type-title"></h1>
 
     <!-- فرم تبدیل تاریخ -->
-    <!-- ... فرم‌ها و دکمه‌ها بدون تغییر ... -->
+    <form method="POST" onsubmit="typeTitle('تبدیل تاریخ')">
+      <input type="hidden" name="action" value="convert">
+      <div class="row">
+        <label>نوع تبدیل:</label>
+        <div class="radio-group">
+          <label><input type="radio" name="mode" value="shamsi" checked onchange="updateFields()"> شمسی</label>
+          <label><input type="radio" name="mode" value="miladi" onchange="updateFields()"> میلادی</label>
+          <label><input type="radio" name="mode" value="hijri" onchange="updateFields()"> قمری</label>
+        </div>
+      </div>
+
+      <div class="row-horizontal" id="shamsi-fields">
+        <select name="year">{% for y in years_shamsi %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>
+        <select name="month">{% for num, name in shamsi_months.items() %}<option value="{{ num }}">{{ name }}</option>{% endfor %}</select>
+        <select name="day">{% for d in days %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>
+      </div>
+
+      <div class="row-horizontal hidden" id="miladi-fields">
+        <select name="year_m">{% for y in years_miladi %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>
+        <select name="month_m">{% for num, name in miladi_months.items() %}<option value="{{ num }}">{{ name }}</option>{% endfor %}</select>
+        <select name="day_m">{% for d in days %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>
+      </div>
+
+      <div class="row-horizontal hidden" id="hijri-fields">
+        <select name="year_h">{% for y in years_hijri %}<option value="{{ y }}">{{ y }}</option>{% endfor %}</select>
+        <select name="month_h">{% for num, name in hijri_months.items() %}<option value="{{ num }}">{{ name }}</option>{% endfor %}</select>
+        <select name="day_h">{% for d in days %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select>
+      </div>
+
+      <div class="buttons">
+        <button type="submit">🔄 تبدیل</button>
+      </div>
+    </form>
+
+    <!-- دکمه تاریخ امروز -->
+    <form method="POST" onsubmit="typeTitle('تاریخ امروز')">
+      <input type="hidden" name="action" value="today">
+      <div class="buttons">
+        <button type="submit">📅 امروز</button>
+      </div>
+    </form>
 
     <!-- دکمه اوقات شرعی -->
     <div class="buttons">
@@ -59,6 +99,7 @@
       </form>
     </div>
 
+    <!-- نمایش اوقات شرعی -->
     {% if result and result.action == "prayer" %}
       <div class="result">
         {% if result.error %}
@@ -135,19 +176,6 @@
     }
     setInterval(updateClock, 1000);
     updateClock();
-
-    window.addEventListener("load", function () {
-      updateFields();
-      {% if result and result.action == "convert" %}
-        typeTitle("تبدیل تاریخ");
-      {% elif result and result.action == "today" %}
-        typeTitle("تاریخ امروز");
-      {% elif result and result.action == "prayer" %}
-        typeTitle("اوقات شرعی");
-      {% else %}
-        typeTitle("تاریخ‌یار");
-      {% endif %}
-    });
 
     function startNearestCountdown(times) {
       const now = new Date();
