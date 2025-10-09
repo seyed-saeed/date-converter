@@ -250,7 +250,7 @@
 
   function fetchPrayerTimes(city) {
     const token = "875825:68e41b27c90e";
-    const url = `https://one-api.ir/owghat/?token=${token}&city=${city}&en_num=0`;
+    const url = `https://one-api.ir/owghat/?token=${token}&city=${encodeURIComponent(city)}&en_num=0`;
 
     fetch(url)
       .then(res => res.json())
@@ -258,6 +258,7 @@
         const wrapper = document.getElementById("prayer-wrapper");
         const resultBox = document.createElement("div");
         resultBox.className = "result";
+        wrapper.innerHTML = ""; // پاک کردن نتایج قبلی
         wrapper.appendChild(resultBox);
 
         if (data.status === "success") {
@@ -270,7 +271,9 @@
             <p>غروب آفتاب: ${r.ghorub}</p>
             <p>اذان مغرب: ${r.azan_maghreb}</p>
             <p>نیمه‌شب شرعی: ${r.nimeshab}</p>
+            <div id="countdown" style="margin-top: 12px; font-weight: bold;"></div>
           `;
+          startCountdown(r.azan_sobh);
         } else {
           resultBox.innerHTML = `<p class="error">خطا در دریافت اطلاعات یا نام شهر نامعتبر است</p>`;
         }
@@ -279,6 +282,28 @@
         console.error(err);
         alert("خطا در اتصال به سرور");
       });
+  }
+
+  function startCountdown(targetTimeStr) {
+    const now = new Date();
+    const [hour, minute] = targetTimeStr.split(":").map(Number);
+    const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
+
+    function updateCountdown() {
+      const diff = target - new Date();
+      if (diff <= 0) {
+        document.getElementById("countdown").innerText = "🕒 زمان اذان صبح فرا رسیده!";
+        clearInterval(timer);
+        return;
+      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById("countdown").innerText = `⏳ تا اذان صبح: ${hours} ساعت ${minutes} دقیقه ${seconds} ثانیه`;
+    }
+
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
   }
 </script>
 
