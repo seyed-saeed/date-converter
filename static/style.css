@@ -253,3 +253,12 @@ button:hover {
   #type-title {
     font-size: 1.6rem;
   }
+  .prayer-result {
+    flex-direction: column;
+  }
+
+.prayer-result p {
+  font-size: 0.95rem;
+  padding: 8px 12px;
+}
+}
