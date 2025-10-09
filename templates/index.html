@@ -178,7 +178,15 @@
       </div>
     {% endif %}
   </div>
-  <div id="countdown" style="margin-top: 12px; font-weight: bold;"></div>
+ <p id="azan_sobh">اذان صبح: 05:12</p>
+<p id="tolu">طلوع آفتاب: 06:45</p>
+<p id="azan_zohr">اذان ظهر: 12:30</p>
+<p id="asr">اذان عصر: 15:45</p>
+<p id="ghorub">غروب آفتاب: 17:55</p>
+<p id="azan_maghreb">اذان مغرب: 18:10</p>
+<p id="isha">اذان عشاء: 19:30</p>
+<p id="nimeshab">نیمه‌شب شرعی: 00:15</p>
+<div id="countdown" style="margin-top: 12px; font-weight: bold;"></div>
 <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
@@ -228,64 +236,10 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  let cities = [];
-
-  fetch("static/cities.json")
-    .then(res => res.json())
-    .then(data => cities = data);
-
   window.addEventListener("load", function () {
     updateFields();
-
-    {% if result and result.action == "convert" %}
-      typeTitle("تبدیل تاریخ");
-    {% elif result and result.action == "today" %}
-      typeTitle("تاریخ امروز");
-    {% elif result and result.action == "prayer" %}
-      typeTitle("اوقات شرعی");
-    {% else %}
-      typeTitle("تاریخ‌یار");
-    {% endif %}
-
-    // فعال‌سازی شمارش معکوس از HTML موجود
-    startNearestCountdown();
+    startNearestCountdown(); // فعال‌سازی شمارش معکوس از HTML
   });
-
-  function fetchPrayerTimes(city) {
-    const token = "875825:68e41b27c90e";
-    const url = `https://one-api.ir/owghat/?token=${token}&city=${encodeURIComponent(city)}&en_num=0`;
-
-    fetch(url)
-      .then(res => res.json())
-      .then(data => {
-        const wrapper = document.getElementById("prayer-wrapper");
-        const resultBox = document.createElement("div");
-        resultBox.className = "result";
-        wrapper.innerHTML = "";
-        wrapper.appendChild(resultBox);
-
-        if (data.status === "success") {
-          const r = data.result;
-          resultBox.innerHTML = `
-            <h3>🕌 اوقات شرعی امروز در ${city}</h3>
-            <p id="azan_sobh">اذان صبح: ${r.azan_sobh}</p>
-            <p id="tolu">طلوع آفتاب: ${r.tolu}</p>
-            <p id="azan_zohr">اذان ظهر: ${r.azan_zohr}</p>
-            <p id="ghorub">غروب آفتاب: ${r.ghorub}</p>
-            <p id="azan_maghreb">اذان مغرب: ${r.azan_maghreb}</p>
-            <p id="nimeshab">نیمه‌شب شرعی: ${r.nimeshab}</p>
-            <div id="countdown" style="margin-top: 12px; font-weight: bold;"></div>
-          `;
-          startNearestCountdown(r);
-        } else {
-          resultBox.innerHTML = `<p class="error">خطا در دریافت اطلاعات یا نام شهر نامعتبر است</p>`;
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        alert("خطا در اتصال به سرور");
-      });
-  }
 
   function startNearestCountdown(times = null) {
     const now = new Date();
@@ -293,8 +247,10 @@
       azan_sobh: "اذان صبح",
       tolu: "طلوع آفتاب",
       azan_zohr: "اذان ظهر",
+      asr: "اذان عصر",
       ghorub: "غروب آفتاب",
       azan_maghreb: "اذان مغرب",
+      isha: "اذان عشاء",
       nimeshab: "نیمه‌شب شرعی"
     };
 
