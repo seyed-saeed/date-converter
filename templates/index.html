@@ -149,19 +149,18 @@
       <button type="button" onclick="showPrayerForm(); typeTitle('اوقات شرعی امروز')">🕌 اوقات شرعی</button>
     </div>
 
-    <div id="prayer-wrapper" class="hidden">
-      <form id="prayer-form" onsubmit="event.preventDefault(); typeTitle('اوقات شرعی امروز'); fetchPrayerTimes(document.getElementById('city').value);">
-        <input type="hidden" name="action" value="prayer">
-        <div class="row">
-          <label for="city">نام شهر:</label>
-          <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
-        </div>
-        <div class="buttons">
-          <button type="submit">✅ تأیید</button>
-        </div>
-      </form>
+   <div id="prayer-wrapper" class="hidden">
+  <form id="prayer-form" onsubmit="event.preventDefault(); typeTitle('اوقات شرعی امروز'); fetchPrayerTimes(document.getElementById('city').value);">
+    <input type="hidden" name="action" value="prayer">
+    <div class="row">
+      <label for="city">نام شهر:</label>
+      <input type="text" name="city" id="city" placeholder="مثلاً Mashhad">
     </div>
-
+    <div class="buttons">
+      <button type="submit">✅ تأیید</button>
+    </div>
+  </form>
+</div>
     {% if result and result.action == "prayer" %}
       <div class="result">
         {% if result.error %}
