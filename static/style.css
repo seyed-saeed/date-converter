@@ -168,13 +168,13 @@ button:hover {
   text-align: center;
   box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
-  .result {
+.prayer-result {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
 }
 
-.result p {
+.prayer-result p {
   flex: 0 0 calc(50% - 12px);
   margin: 0;
   background-color: rgba(255, 255, 255, 0.1);
