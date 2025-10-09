@@ -227,27 +227,52 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // اوقات شرعی با لیست شهرها
-  let cities = [];
+  // تبدیل رشته زمان به Date
+  function parseTimeToDate(timeStr) {
+    const [hour, minute] = timeStr.split(":").map(Number);
+    const now = new Date();
+    return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
+  }
 
-  fetch("static/cities.json")
-    .then(res => res.json())
-    .then(data => cities = data);
+  // پیدا کردن نزدیک‌ترین اذان آینده
+  function getNextAzanTime(prayerTimes) {
+    const now = new Date();
+    const times = [
+      { name: "اذان صبح", time: parseTimeToDate(prayerTimes.azan_sobh) },
+      { name: "اذان ظهر", time: parseTimeToDate(prayerTimes.azan_zohr) },
+      { name: "اذان عصر", time: parseTimeToDate(prayerTimes.azan_asr) },
+      { name: "اذان مغرب", time: parseTimeToDate(prayerTimes.azan_maghreb) },
+      { name: "اذان عشاء", time: parseTimeToDate(prayerTimes.azan_isha) }
+    ];
+    return times.find(t => t.time > now);
+  }
 
-  window.addEventListener("load", function () {
-    updateFields();
+  // ساخت شمارش معکوس
+  function startCountdown(targetTime, label) {
+    const countdownBox = document.createElement("div");
+    countdownBox.id = "countdown-box";
+    countdownBox.innerHTML = `<p>⏳ تا ${label}: <span id="countdown"></span></p>`;
+    document.querySelector(".result").appendChild(countdownBox);
 
-    {% if result and result.action == "convert" %}
-      typeTitle("تبدیل تاریخ");
-    {% elif result and result.action == "today" %}
-      typeTitle("تاریخ امروز");
-    {% elif result and result.action == "prayer" %}
-      typeTitle("اوقات شرعی");
-    {% else %}
-      typeTitle("تاریخ‌یار");
-    {% endif %}
-  });
+    function updateCountdown() {
+      const now = new Date();
+      const diff = Math.floor((targetTime - now) / 1000);
+      if (diff <= 0) {
+        document.getElementById("countdown").innerText = "رسیدیم!";
+        clearInterval(timer);
+        return;
+      }
+      const h = Math.floor(diff / 3600);
+      const m = Math.floor((diff % 3600) / 60);
+      const s = diff % 60;
+      document.getElementById("countdown").innerText = `${h}س ${m}د ${s}ث`;
+    }
 
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+  }
+
+  // دریافت اوقات شرعی و نمایش شمارش معکوس
   function fetchPrayerTimes(city) {
     const token = "875825:68e41b27c90e";
     const url = `https://one-api.ir/owghat/?token=${token}&city=${city}&en_num=0`;
@@ -271,6 +296,12 @@
             <p>اذان مغرب: ${r.azan_maghreb}</p>
             <p>نیمه‌شب شرعی: ${r.nimeshab}</p>
           `;
+
+          // اضافه کردن شمارش معکوس
+          const nextAzan = getNextAzanTime(r);
+          if (nextAzan) {
+            startCountdown(nextAzan.time, nextAzan.name);
+          }
         } else {
           resultBox.innerHTML = `<p class="error">خطا در دریافت اطلاعات یا نام شهر نامعتبر است</p>`;
         }
@@ -280,6 +311,25 @@
         alert("خطا در اتصال به سرور");
       });
   }
+
+  // بارگذاری اولیه
+  let cities = [];
+  fetch("static/cities.json")
+    .then(res => res.json())
+    .then(data => cities = data);
+
+  window.addEventListener("load", function () {
+    updateFields();
+    {% if result and result.action == "convert" %}
+      typeTitle("تبدیل تاریخ");
+    {% elif result and result.action == "today" %}
+      typeTitle("تاریخ امروز");
+    {% elif result and result.action == "prayer" %}
+      typeTitle("اوقات شرعی");
+    {% else %}
+      typeTitle("تاریخ‌یار");
+    {% endif %}
+  });
 </script>
 
 </body>
