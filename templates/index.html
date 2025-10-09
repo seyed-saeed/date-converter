@@ -245,49 +245,31 @@
     {% endif %}
   });
 
-  function fetchPrayerTimes(city) {
-  const token = "875825:68e41b27c90e";
-  const url = `https://one-api.ir/owghat/?token=${token}&city=${city}&en_num=0`;
+ function startCountdown(targetTime, label) {
+  const countdownBox = document.createElement("div");
+  countdownBox.id = "countdown-box";
+  countdownBox.innerHTML = `<p>⏳ تا ${label}: <span id="countdown"></span></p>`;
+  const resultArea = document.querySelector(".result");
+  if (resultArea) resultArea.appendChild(countdownBox);
 
-  fetch(url)
-    .then(res => res.json())
-    .then(data => {
-      const wrapper = document.getElementById("prayer-wrapper");
-      wrapper.innerHTML = ""; // پاک‌سازی قبلی
-      const resultBox = document.createElement("div");
-      resultBox.className = "result";
-      wrapper.appendChild(resultBox);
+  function updateCountdown() {
+    const now = new Date();
+    const diff = Math.floor((targetTime - now) / 1000);
+    if (diff <= 0) {
+      document.getElementById("countdown").innerText = "رسیدیم!";
+      clearInterval(timer);
+      return;
+    }
+    const h = Math.floor(diff / 3600);
+    const m = Math.floor((diff % 3600) / 60);
+    const s = diff % 60;
+    document.getElementById("countdown").innerText = `${h}س ${m}د ${s}ث`;
+  }
 
-      if (data.status === "success") {
-        const r = data.result;
-        resultBox.innerHTML = `
-          <h3>🕌 اوقات شرعی امروز در ${city}</h3>
-          <p>اذان صبح: ${r.azan_sobh}</p>
-          <p>طلوع آفتاب: ${r.tolu}</p>
-          <p>اذان ظهر: ${r.azan_zohr}</p>
-          <p>غروب آفتاب: ${r.ghorub}</p>
-          <p>اذان مغرب: ${r.azan_maghreb}</p>
-          <p>نیمه‌شب شرعی: ${r.nimeshab}</p>
-        `;
-
-        const nextAzan = getNextAzanTime(r);
-        if (nextAzan) {
-          startCountdown(nextAzan.time, nextAzan.name);
-        } else {
-          resultBox.innerHTML += `<p>⏳ امروز همه اذان‌ها گذشته‌اند</p>`;
-        }
-
-      } else {
-        resultBox.innerHTML = `<p class="error">خطا در دریافت اطلاعات یا نام شهر نامعتبر است</p>`;
-      }
-    })
-    .catch(err => {
-      console.error(err);
-      alert("خطا در اتصال به سرور");
-    });
+  updateCountdown();
+  const timer = setInterval(updateCountdown, 1000);
 }
 
 </script>
-
 </body>
 </html>
