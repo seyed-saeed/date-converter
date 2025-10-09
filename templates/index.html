@@ -163,21 +163,28 @@
     </div>
 
     {% if result and result.action == "prayer" %}
-      <div class="result">
-        {% if result.error %}
-          <p class="error">{{ result.error }}</p>
-        {% else %}
-          <h3>🕌 اوقات شرعی امروز در {{ result.city_name }}</h3>
-          <p>اذان صبح: {{ result.prayer_times.Fajr }}</p>
-          <p>طلوع آفتاب: {{ result.prayer_times.Sunrise }}</p>
-          <p>اذان ظهر: {{ result.prayer_times.Dhuhr }}</p>
-          <p>اذان عصر: {{ result.prayer_times.Asr }}</p>
-          <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
-          <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
-        {% endif %}
+<div class="result">
+  {% if result.error %}
+    <p class="error">{{ result.error }}</p>
+  {% else %}
+    <h3>🕌 اوقات شرعی امروز در {{ result.city_name }}</h3>
+    <div class="prayer-grid">
+      <div class="prayer-pair">
+        <div>اذان صبح: <strong>{{ result.prayer_times.Fajr }}</strong></div>
+        <div>طلوع آفتاب: <strong>{{ result.prayer_times.Sunrise }}</strong></div>
       </div>
-    {% endif %}
-  </div>
+      <div class="prayer-pair">
+        <div>اذان ظهر: <strong>{{ result.prayer_times.Dhuhr }}</strong></div>
+        <div>اذان عصر: <strong>{{ result.prayer_times.Asr }}</strong></div>
+      </div>
+      <div class="prayer-pair">
+        <div>اذان مغرب: <strong>{{ result.prayer_times.Maghrib }}</strong></div>
+        <div>اذان عشاء: <strong>{{ result.prayer_times.Isha }}</strong></div>
+      </div>
+    </div>
+  {% endif %}
+</div>
+
 <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
