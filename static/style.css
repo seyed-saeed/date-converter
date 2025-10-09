@@ -168,15 +168,14 @@ button:hover {
   text-align: center;
   box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
-.result h3 + p,
-.result h3 + p + p,
-.result h3 + p + p + p,
-.result h3 + p + p + p + p,
-.result h3 + p + p + p + p + p,
-.result h3 + p + p + p + p + p + p {
-  display: inline-block;
-  width: 48%;
-  margin: 6px 1%;
+.result h3 + p {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.result h3 + p ~ p {
+  flex: 0 0 calc(50% - 12px);
+  margin: 6px 6px;
   background-color: rgba(255, 255, 255, 0.1);
   padding: 10px 14px;
   border-radius: 8px;
