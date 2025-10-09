@@ -246,6 +246,9 @@
     {% else %}
       typeTitle("تاریخ‌یار");
     {% endif %}
+
+    // فعال‌سازی شمارش معکوس از HTML موجود
+    startNearestCountdown();
   });
 
   function fetchPrayerTimes(city) {
@@ -284,7 +287,7 @@
       });
   }
 
-  function startNearestCountdown(times) {
+  function startNearestCountdown(times = null) {
     const now = new Date();
     const labels = {
       azan_sobh: "اذان صبح",
@@ -300,8 +303,15 @@
     let minDiff = Infinity;
 
     for (const key in labels) {
-      const timeStr = times[key];
-      if (!timeStr) continue;
+      let timeStr = times?.[key];
+      if (!timeStr || !timeStr.includes(":")) {
+        const el = document.getElementById(key);
+        if (el && el.textContent.includes(":")) {
+          timeStr = el.textContent.split(":").pop().trim();
+        }
+      }
+      if (!timeStr || !timeStr.includes(":")) continue;
+
       const [hour, minute] = timeStr.split(":").map(Number);
       const target = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
       const diff = target - now;
@@ -313,6 +323,8 @@
     }
 
     const countdownEl = document.getElementById("countdown");
+    if (!countdownEl) return;
+
     if (!nearest) {
       countdownEl.innerText = "🕒 همه زمان‌های شرعی امروز گذشته‌اند!";
       return;
@@ -335,7 +347,6 @@
     const timer = setInterval(updateCountdown, 1000);
   }
 </script>
-
 
 </body>
 </html>
