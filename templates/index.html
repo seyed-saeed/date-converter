@@ -244,32 +244,7 @@
       typeTitle("تاریخ‌یار");
     {% endif %}
   });
-
- function startCountdown(targetTime, label) {
-  const countdownBox = document.createElement("div");
-  countdownBox.id = "countdown-box";
-  countdownBox.innerHTML = `<p>⏳ تا ${label}: <span id="countdown"></span></p>`;
-  const resultArea = document.querySelector(".result");
-  if (resultArea) resultArea.appendChild(countdownBox);
-
-  function updateCountdown() {
-    const now = new Date();
-    const diff = Math.floor((targetTime - now) / 1000);
-    if (diff <= 0) {
-      document.getElementById("countdown").innerText = "رسیدیم!";
-      clearInterval(timer);
-      return;
-    }
-    const h = Math.floor(diff / 3600);
-    const m = Math.floor((diff % 3600) / 60);
-    const s = diff % 60;
-    document.getElementById("countdown").innerText = `${h}س ${m}د ${s}ث`;
   }
-
-  updateCountdown();
-  const timer = setInterval(updateCountdown, 1000);
-}
-
 </script>
 </body>
 </html>
