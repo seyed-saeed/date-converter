@@ -178,7 +178,7 @@
       </div>
     {% endif %}
   </div>
-<script>
+  <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
   }
@@ -227,32 +227,31 @@
   setInterval(updateClock, 1000);
   updateClock();
 
-  // تبدیل رشته زمان به Date
   function parseTimeToDate(timeStr) {
     const [hour, minute] = timeStr.split(":").map(Number);
     const now = new Date();
     return new Date(now.getFullYear(), now.getMonth(), now.getDate(), hour, minute, 0);
   }
 
-  // پیدا کردن نزدیک‌ترین اذان آینده
   function getNextAzanTime(prayerTimes) {
     const now = new Date();
-    const times = [
-      { name: "اذان صبح", time: parseTimeToDate(prayerTimes.azan_sobh) },
-      { name: "اذان ظهر", time: parseTimeToDate(prayerTimes.azan_zohr) },
-      { name: "اذان عصر", time: parseTimeToDate(prayerTimes.azan_asr) },
-      { name: "اذان مغرب", time: parseTimeToDate(prayerTimes.azan_maghreb) },
-      { name: "اذان عشاء", time: parseTimeToDate(prayerTimes.azan_isha) }
-    ];
+    const times = [];
+
+    if (prayerTimes.azan_sobh) times.push({ name: "اذان صبح", time: parseTimeToDate(prayerTimes.azan_sobh) });
+    if (prayerTimes.azan_zohr) times.push({ name: "اذان ظهر", time: parseTimeToDate(prayerTimes.azan_zohr) });
+    if (prayerTimes.azan_asr) times.push({ name: "اذان عصر", time: parseTimeToDate(prayerTimes.azan_asr) });
+    if (prayerTimes.azan_maghreb) times.push({ name: "اذان مغرب", time: parseTimeToDate(prayerTimes.azan_maghreb) });
+    if (prayerTimes.azan_isha) times.push({ name: "اذان عشاء", time: parseTimeToDate(prayerTimes.azan_isha) });
+
     return times.find(t => t.time > now);
   }
 
-  // ساخت شمارش معکوس
   function startCountdown(targetTime, label) {
     const countdownBox = document.createElement("div");
     countdownBox.id = "countdown-box";
     countdownBox.innerHTML = `<p>⏳ تا ${label}: <span id="countdown"></span></p>`;
-    document.querySelector(".result").appendChild(countdownBox);
+    const resultArea = document.querySelector(".result");
+    if (resultArea) resultArea.appendChild(countdownBox);
 
     function updateCountdown() {
       const now = new Date();
@@ -272,7 +271,6 @@
     const timer = setInterval(updateCountdown, 1000);
   }
 
-  // دریافت اوقات شرعی و نمایش شمارش معکوس
   function fetchPrayerTimes(city) {
     const token = "875825:68e41b27c90e";
     const url = `https://one-api.ir/owghat/?token=${token}&city=${city}&en_num=0`;
@@ -281,6 +279,7 @@
       .then(res => res.json())
       .then(data => {
         const wrapper = document.getElementById("prayer-wrapper");
+        wrapper.innerHTML = ""; // پاک‌سازی قبلی
         const resultBox = document.createElement("div");
         resultBox.className = "result";
         wrapper.appendChild(resultBox);
@@ -297,10 +296,11 @@
             <p>نیمه‌شب شرعی: ${r.nimeshab}</p>
           `;
 
-          // اضافه کردن شمارش معکوس
           const nextAzan = getNextAzanTime(r);
           if (nextAzan) {
             startCountdown(nextAzan.time, nextAzan.name);
+          } else {
+            resultBox.innerHTML += `<p>⏳ امروز همه اذان‌ها گذشته‌اند</p>`;
           }
         } else {
           resultBox.innerHTML = `<p class="error">خطا در دریافت اطلاعات یا نام شهر نامعتبر است</p>`;
@@ -312,7 +312,6 @@
       });
   }
 
-  // بارگذاری اولیه
   let cities = [];
   fetch("static/cities.json")
     .then(res => res.json())
@@ -331,6 +330,7 @@
     {% endif %}
   });
 </script>
+
 
 </body>
 </html>
