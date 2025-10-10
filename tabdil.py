@@ -98,7 +98,7 @@ def convert_date():
     result = {}
     years_shamsi = list(range(1320, 1450))
     years_miladi = list(range(1960, 2061))
-    years_hijri = list(range(1330, 1491))
+    years_hijri = list(range(1343, 1491))
     days = list(range(1, 32))
 
     if request.method == 'POST':
@@ -216,4 +216,5 @@ def convert_date():
 
 if __name__ == "__main__":
     app.run(debug=True)
+
 
