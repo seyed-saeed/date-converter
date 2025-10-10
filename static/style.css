@@ -190,6 +190,7 @@ button:hover {
   font-size: 1rem;
   text-align: right;
   box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
