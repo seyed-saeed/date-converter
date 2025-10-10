@@ -178,6 +178,17 @@
       </div>
     {% endif %}
   </div>
-  <script src="static/javaweb.js"></script>
+<script src="static/javaweb.js"></script>
+<script>
+  {% if result and result.action == "convert" %}
+    typeTitle("تبدیل تاریخ");
+  {% elif result and result.action == "today" %}
+    typeTitle("تاریخ امروز");
+  {% elif result and result.action == "prayer" %}
+    typeTitle("اوقات شرعی");
+  {% else %}
+    typeTitle("تاریخ‌یار");
+  {% endif %}
+</script>
 </body>
 </html>
