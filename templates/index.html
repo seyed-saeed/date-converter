@@ -178,30 +178,6 @@
       </div>
     {% endif %}
   </div>
-  <div id="calendar-wrapper" class="hidden">
-  <div class="calendar-box">
-    <h3 id="calendar-title">📅 فروردین ۱۴۰۵</h3>
-    <div class="calendar-nav">
-      <button onclick="prevMonth()">⬅ ماه قبل</button>
-      <button onclick="nextMonth()">ماه بعد ➡</button>
-    </div>
-    <ul id="calendar-days">
-      <!-- روزها و مناسبت‌ها اینجا نمایش داده می‌شن -->
-    </ul>
-  </div>
-</div>
-<div id="calendar-wrapper" class="hidden">
-  <div class="calendar-box">
-    <h3 id="calendar-title">📅 فروردین ۱۴۰۵</h3>
-    <div class="calendar-nav">
-      <button onclick="prevMonth()">⬅ ماه قبل</button>
-      <button onclick="nextMonth()">ماه بعد ➡</button>
-    </div>
-    <ul id="calendar-days">
-      <!-- روزها و مناسبت‌ها اینجا نمایش داده می‌شن -->
-    </ul>
-  </div>
-</div>
 <script>
   function showPrayerForm() {
     document.getElementById("prayer-wrapper").classList.remove("hidden");
@@ -271,57 +247,6 @@
       typeTitle("تاریخ‌یار");
     {% endif %}
   });
-  const months = [
-  "فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور",
-  "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"
-];
-
-const events = {
-  "فروردین": ["۱ تا ۴: تعطیلات نوروز", "۱۲: روز جمهوری اسلامی", "۱۳: روز طبیعت"],
-  "اردیبهشت": ["۱۲: روز معلم", "۲۵: روز بزرگداشت فردوسی"],
-  "خرداد": ["۱۴: رحلت امام خمینی", "۱۵: قیام ۱۵ خرداد"],
-  "تیر": ["۷: شهادت دکتر بهشتی"],
-  "مرداد": ["تاسوعا و عاشورا"],
-  "شهریور": ["۳۱: آغاز سال تحصیلی"],
-  "مهر": ["۲۰: اربعین حسینی"],
-  "آبان": ["۱۳: روز ملی مبارزه با استکبار"],
-  "آذر": ["۵: روز بسیج"],
-  "دی": ["۹: حماسه ۹ دی"],
-  "بهمن": ["۱۲ تا ۲۲: دهه فجر", "۲۲: پیروزی انقلاب اسلامی"],
-  "اسفند": ["۲۹: لحظه تحویل سال"]
-};
-
-let currentMonthIndex = 0;
-
-function showCalendar() {
-  document.getElementById("calendar-wrapper").classList.remove("hidden");
-  updateCalendar();
-}
-
-function updateCalendar() {
-  const monthName = months[currentMonthIndex];
-  document.getElementById("calendar-title").innerText = `📅 ${monthName} ۱۴۰۵`;
-
-  const daysList = document.getElementById("calendar-days");
-  daysList.innerHTML = "";
-
-  const monthEvents = events[monthName] || [];
-  monthEvents.forEach(event => {
-    const li = document.createElement("li");
-    li.innerText = `🔸 ${event}`;
-    daysList.appendChild(li);
-  });
-}
-
-function prevMonth() {
-  currentMonthIndex = (currentMonthIndex - 1 + months.length) % months.length;
-  updateCalendar();
-}
-
-function nextMonth() {
-  currentMonthIndex = (currentMonthIndex + 1) % months.length;
-  updateCalendar();
-}
 </script>
 
 </body>
