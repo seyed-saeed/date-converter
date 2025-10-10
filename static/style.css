@@ -237,4 +237,36 @@ button:hover {
     width: 100% !important;
   }
 }
+.calendar-nav {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0 20px 0;
+}
 
+.calendar-nav button {
+  padding: 8px 16px;
+  font-size: 1rem;
+  background: linear-gradient(to right, #0077cc, #00aaff);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.calendar-nav button:hover {
+  background: linear-gradient(to right, #005fa3, #0088cc);
+  transform: translateY(-2px);
+}
+
+#calendar-days {
+  list-style: none;
+  padding: 0;
+}
+
+#calendar-days li {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  color: #333;
+}
