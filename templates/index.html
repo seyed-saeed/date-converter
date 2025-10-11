@@ -163,20 +163,31 @@
     </div>
 
     {% if result and result.action == "prayer" %}
-      <div class="prayer-result">
-        {% if result.error %}
-          <p class="error">{{ result.error }}</p>
-        {% else %}
-          <h3>🕌 اوقات شرعی امروز در {{ result.city_name }}</h3>
-          <p>اذان صبح: {{ result.prayer_times.Fajr }}</p>
-          <p>طلوع آفتاب: {{ result.prayer_times.Sunrise }}</p>
-          <p>اذان ظهر: {{ result.prayer_times.Dhuhr }}</p>
-          <p>اذان عصر: {{ result.prayer_times.Asr }}</p>
-          <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
-          <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
-        {% endif %}
+  <div class="prayer-result">
+    {% if result.error %}
+      <p class="error">{{ result.error }}</p>
+    {% else %}
+      <h3>🕌 اوقات شرعی امروز در {{ result.city_name }}</h3>
+      <p>اذان صبح: {{ result.prayer_times.Fajr }}</p>
+      <p>طلوع آفتاب: {{ result.prayer_times.Sunrise }}</p>
+      <p>اذان ظهر: {{ result.prayer_times.Dhuhr }}</p>
+      <p>اذان عصر: {{ result.prayer_times.Asr }}</p>
+      <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
+      <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
+
+      <!-- لینک قبله نما -->
+      <p style="margin-top: 15px;">
+        <a href="#" onclick="document.getElementById('qiblaBox').style.display='block'; return false;">قبله نما</a>
+      </p>
+
+      <!-- iframe قبله نما (مخفی) -->
+      <div id="qiblaBox" style="display:none; margin-top:20px;">
+        <iframe src="https://www.qiblafinder.org/IR" width="100%" height="600" style="border:none;"></iframe>
       </div>
     {% endif %}
+  </div>
+{% endif %}
+
   </div>
 <script src="static/javaweb.js"></script>
 <script>
