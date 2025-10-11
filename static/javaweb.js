@@ -57,3 +57,7 @@ fetch("static/cities.json")
 window.addEventListener("load", function () {
   updateFields();
 });
+function toggleQibla() {
+    const box = document.getElementById('qiblaBox');
+    box.style.display = (box.style.display === 'block') ? 'none' : 'block';
+  }
