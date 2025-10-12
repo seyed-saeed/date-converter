@@ -238,4 +238,8 @@ button:hover {
     width: 100% !important;
   }
 }
+#qiblaBox {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
 
