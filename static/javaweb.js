@@ -109,50 +109,59 @@ function toggleQuran(event) {
   }
 }
 const dhikr = {
-  "شنبه": "اللهم قاضی الحاجات",
-  "یکشنبه": "سبحان الله وبحمده",
-  "دوشنبه": "اللهم صل علی محمد وآل محمد",
-  "سه‌شنبه": "استغفر الله و اتوب الیه",
-  "چهارشنبه": "اللهم اجعل هذا اليوم مبارکاً",
-  "پنج‌شنبه": "اللهم ارزقنا التوفیق",
-  "جمعه": "اللهم اجعلنا من عبادک الصالحین"
+  "شنبه": "یا رب العالمین",
+  "یکشنبه": "یا ذاالجلال و الاکرام",
+  "دوشنبه": "یا قاضی الحاجات",
+  "سه‌شنبه": "یا ارحم الراحمین",
+  "چهارشنبه": "یا حی یا قیوم",
+  "پنج‌شنبه": "لا اله الا الله الملک الحق المبین",
+  "جمعه": "اللهم صل علی محمد و آل محمد"
 };
 
 const days = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنج‌شنبه","جمعه"];
+const jsToPersianIndex = [6,0,1,2,3,4,5]; // شنبه اول
 
+// گرفتن عناصر ذکر هفته
 const trigger = document.getElementById("weekly-dhikr-trigger");
 const card = document.getElementById("weekly-dhikr-card");
 const closeBtn = document.getElementById("close-dhikr-card");
 
-trigger.addEventListener("click", function(e){
-  const todayIndex = new Date().getDay(); // JS: یکشنبه=0، شنبه=6
-  const jsToPersianIndex = [6,0,1,2,3,4,5];
-  const dayName = days[jsToPersianIndex[todayIndex]];
+// بررسی وجود عناصر
+if(trigger && card && closeBtn){
+  // نمایش و toggle کارت ذکر
+  trigger.addEventListener("click", function(e){
+    const todayIndex = new Date().getDay(); // یکشنبه=0
+    const dayName = days[jsToPersianIndex[todayIndex]];
 
-  document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
-  document.getElementById("dhikr-text").textContent = dhikr[dayName];
+    document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
+    document.getElementById("dhikr-text").textContent = dhikr[dayName];
 
-  const rect = trigger.getBoundingClientRect();
-  card.style.top = (rect.bottom + window.scrollY + 8) + "px";
-  card.style.left = (rect.left + window.scrollX) + "px";
+    const rect = trigger.getBoundingClientRect();
+    card.style.top = (rect.bottom + window.scrollY + 8) + "px";
+    card.style.left = (rect.left + window.scrollX) + "px";
 
-  card.style.display = "block";
-  setTimeout(() => {
-    card.style.opacity = 1;
-    card.style.transition = "opacity 0.3s ease-in-out";
-  }, 10);
-});
+    if(card.style.display === "block") {
+      card.style.opacity = 0;
+      setTimeout(() => { card.style.display = "none"; }, 300);
+    } else {
+      card.style.display = "block";
+      card.style.transition = "opacity 0.3s ease-in-out";
+      setTimeout(() => { card.style.opacity = 1; }, 10);
+    }
+  });
 
-// بستن کارت با کلیک روی ×
-closeBtn.addEventListener("click", function() {
-  card.style.opacity = 0;
-  setTimeout(() => { card.style.display = "none"; }, 300);
-});
-
-// بستن کارت با کلیک خارج از آن
-document.addEventListener("click", function(e){
-  if(!card.contains(e.target) && !trigger.contains(e.target)){
+  // بستن کارت با ×
+  closeBtn.addEventListener("click", function() {
     card.style.opacity = 0;
     setTimeout(() => { card.style.display = "none"; }, 300);
-  }
-});
+  });
+
+  // بستن کارت با کلیک خارج از آن
+  document.addEventListener("click", function(e){
+    if(!card.contains(e.target) && !trigger.contains(e.target)){
+      card.style.opacity = 0;
+      setTimeout(() => { card.style.display = "none"; }, 300);
+    }
+  });
+}
+
