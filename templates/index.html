@@ -200,13 +200,14 @@
   </div>
 {% endif %}
   </div>
-  <div id="weekly-dhikr-trigger" 
-     style="cursor:pointer; display:inline-block; padding:8px 14px; 
-            background:#4caf50; color:white; border-radius:8px; font-family:Vazir,sans-serif;
-            font-weight:bold; border:none; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
-  ذکر هفته 📿
+<div style="display:flex; justify-content:center; gap:15px; margin-top:15px;">
+  <button id="prayer-btn" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
+  <a href="#" id="qiblaToggle" onclick="toggleQibla(event)">🕋 قبله‌نما</a>
+  <a href="https://www.ghorany.com/quran.htm" target="_blank" rel="noopener noreferrer" id="quranToggle">📖 قرآن صوتی</a>
+  <div id="weekly-dhikr-trigger" style="cursor:pointer; padding:6px 12px; background:#4caf50; color:white; border-radius:8px; font-weight:bold;">
+    ذکر هفته 📿
+  </div>
 </div>
-
 <div id="weekly-dhikr-card" 
      style="display:none; position:absolute; background:#ffffffcc; padding:14px 18px; 
             border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.25); 
