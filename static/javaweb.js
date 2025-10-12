@@ -70,3 +70,22 @@ function toggleQibla(event) {
     toggleLink.textContent = '🧭بستن قبله نما';
   }
 }
+function toggleQibla(event) {
+  event.preventDefault();
+  const box = document.getElementById('qiblaBox');
+  const toggleLink = document.getElementById('qiblaToggle');
+
+  if (box.style.display === 'block') {
+    box.style.opacity = 0;
+    toggleLink.textContent = '🧭قبله نما';
+    setTimeout(() => {
+      box.style.display = 'none';
+    }, 400); // مدت انیمیشن
+  } else {
+    box.style.display = 'block';
+    setTimeout(() => {
+      box.style.opacity = 1;
+    }, 10); // برای فعال کردن transition
+    toggleLink.textContent = '🧭بستن قبله نما';
+  }
+}
