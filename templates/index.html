@@ -178,7 +178,9 @@
       <!-- لینک‌ها روبروی هم -->
       <div style="display:flex; justify-content:center; gap:20px; margin-top:15px;">
         <a href="#" id="qiblaToggle" onclick="toggleQibla(event)">🕋 قبله‌نما</a>
-        <a href="#" id="quranToggle" onclick="toggleQuran(event)">📖 قرآن صوتی</a>
+        <a href="https://www.parsquran.com/book/" target="_blank" rel="noopener noreferrer">
+          📖 قرآن صوتی
+        </a>
       </div>
 
       <!-- قبله‌نما iframe -->
@@ -191,11 +193,6 @@
             <text x="50" y="90" font-size="12" font-family="Vazir,sans-serif" fill="#0077cc" text-anchor="middle">شمال</text>
           </svg>
         </div>
-      </div>
-
-      <!-- قرآن صوتی iframe -->
-      <div id="quranBox" style="display:none; max-width:700px; margin:auto; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.15); overflow:hidden;">
-        <iframe src="https://www.parsquran.com/book/" width="800" height="600" style="border:1px solid #888; border-radius:10px;"></iframe>
       </div>
 
     {% endif %}
