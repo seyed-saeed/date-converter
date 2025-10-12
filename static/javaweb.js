@@ -57,19 +57,7 @@ fetch("static/cities.json")
 window.addEventListener("load", function () {
   updateFields();
 });
-function toggleQibla(event) {
-  event.preventDefault();
-  const box = document.getElementById('qiblaBox');
-  const toggleLink = document.getElementById('qiblaToggle');
-  
-  if (box.style.display === 'block') {
-    box.style.display = 'none';
-    toggleLink.textContent = '🧭قبله نما';
-  } else {
-    box.style.display = 'block';
-    toggleLink.textContent = '🧭بستن قبله نما';
-  }
-}
+
 function toggleQibla(event) {
   event.preventDefault();
   const box = document.getElementById('qiblaBox');
