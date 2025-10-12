@@ -108,27 +108,27 @@ function toggleQuran(event) {
     }
   }
 }
-const dhikr = {
-  "شنبه": "یا رب العالمین",
-  "یکشنبه": "یا ذاالجلال و الاکرام",
-  "دوشنبه": "یا قاضی الحاجات",
-  "سه‌شنبه": "یا ارحم الراحمین",
-  "چهارشنبه": "یا حی یا قیوم",
-  "پنج‌شنبه": "لا اله الا الله الملک الحق المبین",
-  "جمعه": "اللهم صل علی محمد و آل محمد"
-};
+// ====== ذکر هفته ======
+(function(){
+  const dhikr = {
+    "شنبه": "یا رب العالمین",
+    "یکشنبه": "یا ذاالجلال و الاکرام",
+    "دوشنبه": "یا قاضی الحاجات",
+    "سه‌شنبه": "یا ارحم الراحمین",
+    "چهارشنبه": "یا حی یا قیوم",
+    "پنج‌شنبه": "لا اله الا الله الملک الحق المبین",
+    "جمعه": "اللهم صل علی محمد و آل محمد"
+  };
 
-const days = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنج‌شنبه","جمعه"];
-const jsToPersianIndex = [6,0,1,2,3,4,5]; // شنبه اول
+  const days = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنج‌شنبه","جمعه"];
+  const jsToPersianIndex = [6,0,1,2,3,4,5]; // شنبه اول
 
-// گرفتن عناصر ذکر هفته
-const trigger = document.getElementById("weekly-dhikr-trigger");
-const card = document.getElementById("weekly-dhikr-card");
-const closeBtn = document.getElementById("close-dhikr-card");
+  const trigger = document.getElementById("weekly-dhikr-trigger");
+  const card = document.getElementById("weekly-dhikr-card");
+  const closeBtn = document.getElementById("close-dhikr-card");
 
-// بررسی وجود عناصر
-if(trigger && card && closeBtn){
-  // نمایش و toggle کارت ذکر
+  if(!trigger || !card || !closeBtn) return;
+
   trigger.addEventListener("click", function(e){
     const todayIndex = new Date().getDay(); // یکشنبه=0
     const dayName = days[jsToPersianIndex[todayIndex]];
@@ -150,18 +150,16 @@ if(trigger && card && closeBtn){
     }
   });
 
-  // بستن کارت با ×
   closeBtn.addEventListener("click", function() {
     card.style.opacity = 0;
     setTimeout(() => { card.style.display = "none"; }, 300);
   });
 
-  // بستن کارت با کلیک خارج از آن
   document.addEventListener("click", function(e){
     if(!card.contains(e.target) && !trigger.contains(e.target)){
       card.style.opacity = 0;
       setTimeout(() => { card.style.display = "none"; }, 300);
     }
   });
-}
+})();
 
