@@ -108,3 +108,51 @@ function toggleQuran(event) {
     }
   }
 }
+const dhikr = {
+  "شنبه": "اللهم قاضی الحاجات",
+  "یکشنبه": "سبحان الله وبحمده",
+  "دوشنبه": "اللهم صل علی محمد وآل محمد",
+  "سه‌شنبه": "استغفر الله و اتوب الیه",
+  "چهارشنبه": "اللهم اجعل هذا اليوم مبارکاً",
+  "پنج‌شنبه": "اللهم ارزقنا التوفیق",
+  "جمعه": "اللهم اجعلنا من عبادک الصالحین"
+};
+
+const days = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنج‌شنبه","جمعه"];
+
+const trigger = document.getElementById("weekly-dhikr-trigger");
+const card = document.getElementById("weekly-dhikr-card");
+const closeBtn = document.getElementById("close-dhikr-card");
+
+trigger.addEventListener("click", function(e){
+  const todayIndex = new Date().getDay(); // JS: یکشنبه=0، شنبه=6
+  const jsToPersianIndex = [6,0,1,2,3,4,5];
+  const dayName = days[jsToPersianIndex[todayIndex]];
+
+  document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
+  document.getElementById("dhikr-text").textContent = dhikr[dayName];
+
+  const rect = trigger.getBoundingClientRect();
+  card.style.top = (rect.bottom + window.scrollY + 8) + "px";
+  card.style.left = (rect.left + window.scrollX) + "px";
+
+  card.style.display = "block";
+  setTimeout(() => {
+    card.style.opacity = 1;
+    card.style.transition = "opacity 0.3s ease-in-out";
+  }, 10);
+});
+
+// بستن کارت با کلیک روی ×
+closeBtn.addEventListener("click", function() {
+  card.style.opacity = 0;
+  setTimeout(() => { card.style.display = "none"; }, 300);
+});
+
+// بستن کارت با کلیک خارج از آن
+document.addEventListener("click", function(e){
+  if(!card.contains(e.target) && !trigger.contains(e.target)){
+    card.style.opacity = 0;
+    setTimeout(() => { card.style.display = "none"; }, 300);
+  }
+});
