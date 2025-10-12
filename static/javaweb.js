@@ -1,7 +1,9 @@
-  function showPrayerForm() {
+// نمایش فرم اوقات شرعی
+function showPrayerForm() {
   document.getElementById("prayer-wrapper").classList.remove("hidden");
 }
 
+// بروزرسانی فیلدهای تبدیل تاریخ
 function updateFields() {
   const mode = document.querySelector('input[name="mode"]:checked').value;
   document.getElementById("shamsi-fields").classList.add("hidden");
@@ -17,6 +19,7 @@ function updateFields() {
   }
 }
 
+// تایپ انیمیشن عنوان
 function typeTitle(text) {
   const titleEl = document.getElementById("type-title");
   titleEl.innerHTML = "";
@@ -31,6 +34,7 @@ function typeTitle(text) {
   type();
 }
 
+// بروزرسانی ساعت زنده
 function updateClock() {
   const now = new Date();
   const time = now.toLocaleTimeString('fa-IR', {
@@ -39,17 +43,14 @@ function updateClock() {
     second: '2-digit'
   });
   const clock = document.getElementById("clock");
-  if (clock) {
-    clock.innerHTML = `🕒 ساعت فعلی: ${time}`;
-  }
+  if (clock) clock.innerHTML = `🕒 ساعت فعلی: ${time}`;
 }
 
 setInterval(updateClock, 1000);
 updateClock();
 
-// دریافت لیست شهرها (اگر cities.json هست)
+// دریافت لیست شهرها (اگر cities.json موجود باشد)
 let cities = [];
-
 fetch("static/cities.json")
   .then(res => res.json())
   .then(data => cities = data);
@@ -58,6 +59,7 @@ window.addEventListener("load", function () {
   updateFields();
 });
 
+// تابع toggle قبله‌نما
 function toggleQibla(event) {
   event.preventDefault();
   const box = document.getElementById('qiblaBox');
@@ -65,15 +67,44 @@ function toggleQibla(event) {
 
   if (box.style.display === 'block') {
     box.style.opacity = 0;
-    toggleLink.textContent = '🧭قبله نما';
-    setTimeout(() => {
-      box.style.display = 'none';
-    }, 400); // مدت انیمیشن
+    toggleLink.textContent = "🕋 قبله‌نما";
+    setTimeout(() => { box.style.display = 'none'; }, 400);
   } else {
     box.style.display = 'block';
-    setTimeout(() => {
-      box.style.opacity = 1;
-    }, 10); // برای فعال کردن transition
-    toggleLink.textContent = '🧭بستن قبله نما';
+    setTimeout(() => { box.style.opacity = 1; }, 10);
+    toggleLink.textContent = "🕋 بستن قبله‌نما";
+    // اگر قرآن بازه، ببندش
+    const quranBox = document.getElementById('quranBox');
+    const quranToggle = document.getElementById('quranToggle');
+    if (quranBox.style.display === 'block') {
+      quranBox.style.opacity = 0;
+      setTimeout(() => { quranBox.style.display = 'none'; }, 400);
+      quranToggle.textContent = "📖 قرآن صوتی";
+    }
+  }
+}
+
+// تابع toggle قرآن صوتی
+function toggleQuran(event) {
+  event.preventDefault();
+  const box = document.getElementById('quranBox');
+  const toggleLink = document.getElementById('quranToggle');
+
+  if (box.style.display === 'block') {
+    box.style.opacity = 0;
+    toggleLink.textContent = "📖 قرآن صوتی";
+    setTimeout(() => { box.style.display = 'none'; }, 400);
+  } else {
+    box.style.display = 'block';
+    setTimeout(() => { box.style.opacity = 1; }, 10);
+    toggleLink.textContent = "📖 بستن قرآن صوتی";
+    // اگر قبله نما بازه، ببندش
+    const qiblaBox = document.getElementById('qiblaBox');
+    const qiblaToggle = document.getElementById('qiblaToggle');
+    if (qiblaBox.style.display === 'block') {
+      qiblaBox.style.opacity = 0;
+      setTimeout(() => { qiblaBox.style.display = 'none'; }, 400);
+      qiblaToggle.textContent = "🕋 قبله‌نما";
+    }
   }
 }
