@@ -176,14 +176,14 @@
       <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
 
       <!-- لینک‌ها روبروی هم -->
-      <div style="display:flex; justify-content:center; gap:20px; margin-top:15px;">
-        <a href="#" id="qiblaToggle" onclick="toggleQibla(event)">🕋 قبله‌نما</a>
-        <!-- لینک باز شدن قرآن در تب جدید با پارامتر برای نمایش دکمه بازگشت -->
-        <a href="https://www.ghorany.com/quran.htm?from=mysite" target="_blank" rel="noopener noreferrer">
-          📖 قرآن صوتی
-        </a>
-      </div>
-
+      <!-- فقط این بخش رو نگه دارید -->
+<div style="display:flex; justify-content:center; gap:15px; margin-top:15px;">
+  <a href="#" id="qiblaToggle" onclick="toggleQibla(event)">🕋 قبله‌نما</a>
+  <a href="https://www.ghorany.com/quran.htm" target="_blank" rel="noopener noreferrer" id="quranToggle">📖 قرآن صوتی</a>
+  <div id="weekly-dhikr-trigger" style="cursor:pointer; padding:6px 12px; background:#4caf50; color:white; border-radius:8px; font-weight:bold;">
+    ذکر هفته 📿
+  </div>
+</div>
       <!-- قبله‌نما iframe -->
       <div id="qiblaBox" style="display:none; max-width:700px; margin:auto; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.15); overflow:hidden;">
         <iframe src="https://www.qiblafinder.org/IR" width="100%" height="600" style="border:none; border-radius:12px 12px 0 0;"></iframe>
@@ -200,30 +200,6 @@
   </div>
 {% endif %}
   </div>
-<div style="display:flex; justify-content:center; gap:15px; margin-top:15px;">
-  <button id="prayer-btn" onclick="showPrayerForm()">🕌 اوقات شرعی</button>
-  <a href="#" id="qiblaToggle" onclick="toggleQibla(event)">🕋 قبله‌نما</a>
-  <a href="https://www.ghorany.com/quran.htm" target="_blank" rel="noopener noreferrer" id="quranToggle">📖 قرآن صوتی</a>
-  <div id="weekly-dhikr-trigger" style="cursor:pointer; padding:6px 12px; background:#4caf50; color:white; border-radius:8px; font-weight:bold;">
-    ذکر هفته 📿
-  </div>
-</div>
-<div id="weekly-dhikr-card" 
-     style="display:none; position:absolute; background:#ffffffcc; padding:14px 18px; 
-            border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.25); 
-            font-family:Vazir,sans-serif; max-width:280px; z-index:9999; opacity:0;">
-  
-  <!-- دکمه بستن × -->
-  <span id="close-dhikr-card" 
-        style="position:absolute; top:6px; right:10px; cursor:pointer; font-weight:bold; 
-               font-size:16px; color:#444;">&times;</span>
-  
-  <div id="day-name" style="font-weight:bold; font-size:16px; margin-bottom:6px;"></div>
-  <div id="dhikr-text" style="font-size:14px; line-height:1.5; color:#333;"></div>
-</div>
-
-<script src="weekly_dhikr.js"></script>
-
 <script src="static/javaweb.js"></script>
 <script>
   {% if result and result.action == "convert" %}
