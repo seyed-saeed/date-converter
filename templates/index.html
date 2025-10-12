@@ -178,9 +178,9 @@
       <!-- لینک‌ها روبروی هم -->
       <div style="display:flex; justify-content:center; gap:20px; margin-top:15px;">
         <a href="#" id="qiblaToggle" onclick="toggleQibla(event)">🕋 قبله‌نما</a>
-        <a href="https://www.parsquran.com/book/" target="_blank" rel="noopener noreferrer">
-          📖 قرآن صوتی
-        </a>
+     <a href="https://www.parsquran.com/book/" target="_blank" rel="noopener noreferrer">
+  📖 قرآن صوتی
+</a>
       </div>
 
       <!-- قبله‌نما iframe -->
@@ -194,21 +194,6 @@
           </svg>
         </div>
       </div>
-
-      <!-- دکمه بازگشت فقط برای سایت قرآن -->
-      <script>
-        // این اسکریپت داخل iframe قرآن قرار بگیره
-        window.addEventListener("load", function() {
-          if (window.location.href.includes("parsquran.com/book")) {
-            const backBtn = document.createElement("a");
-            backBtn.href = "https://yoursite.com"; // لینک سایت شما
-            backBtn.textContent = "🏠 بازگشت به سایت";
-            backBtn.style.cssText = "position:fixed; bottom:20px; right:20px; background:#0077cc; color:white; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:bold; box-shadow:0 4px 10px rgba(0,0,0,0.2); z-index:9999;";
-            document.body.appendChild(backBtn);
-          }
-        });
-      </script>
-
     {% endif %}
   </div>
 {% endif %}
