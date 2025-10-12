@@ -178,9 +178,10 @@
       <!-- لینک‌ها روبروی هم -->
       <div style="display:flex; justify-content:center; gap:20px; margin-top:15px;">
         <a href="#" id="qiblaToggle" onclick="toggleQibla(event)">🕋 قبله‌نما</a>
-<a href="https://www.ghorany.com/quran.htm" target="_blank" rel="noopener noreferrer">
-  📖 قرآن صوتی
-</a>
+        <!-- لینک باز شدن قرآن در تب جدید با پارامتر برای نمایش دکمه بازگشت -->
+        <a href="https://www.ghorany.com/quran.htm?from=mysite" target="_blank" rel="noopener noreferrer">
+          📖 قرآن صوتی
+        </a>
       </div>
 
       <!-- قبله‌نما iframe -->
@@ -194,10 +195,10 @@
           </svg>
         </div>
       </div>
+
     {% endif %}
   </div>
 {% endif %}
-
   </div>
 <script src="static/javaweb.js"></script>
 <script>
