@@ -200,6 +200,29 @@
   </div>
 {% endif %}
   </div>
+  <div id="weekly-dhikr-trigger" 
+     style="cursor:pointer; display:inline-block; padding:8px 14px; 
+            background:#4caf50; color:white; border-radius:8px; font-family:Vazir,sans-serif;
+            font-weight:bold; border:none; box-shadow:0 4px 8px rgba(0,0,0,0.2);">
+  ذکر هفته 📿
+</div>
+
+<div id="weekly-dhikr-card" 
+     style="display:none; position:absolute; background:#ffffffcc; padding:14px 18px; 
+            border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.25); 
+            font-family:Vazir,sans-serif; max-width:280px; z-index:9999; opacity:0;">
+  
+  <!-- دکمه بستن × -->
+  <span id="close-dhikr-card" 
+        style="position:absolute; top:6px; right:10px; cursor:pointer; font-weight:bold; 
+               font-size:16px; color:#444;">&times;</span>
+  
+  <div id="day-name" style="font-weight:bold; font-size:16px; margin-bottom:6px;"></div>
+  <div id="dhikr-text" style="font-size:14px; line-height:1.5; color:#333;"></div>
+</div>
+
+<script src="weekly_dhikr.js"></script>
+
 <script src="static/javaweb.js"></script>
 <script>
   {% if result and result.action == "convert" %}
