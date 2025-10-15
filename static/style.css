@@ -199,6 +199,25 @@ button:hover {
   box-sizing: border-box;
   box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
+.green-button {
+  padding: 10px 16px;
+  background-color: #4caf50;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
+  display: inline-block;
+  text-align: center;
+}
+
+.green-button:hover {
+  background-color: #43a047;
+  transform: translateY(-2px);
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
