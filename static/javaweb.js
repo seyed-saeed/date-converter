@@ -120,7 +120,6 @@ function toggleQuran(event) {
     "جمعه": "اللهم صل علی محمد و آل محمد"
   };
 
-  // روزها به ترتیب جاوااسکریپت (یکشنبه=0)
   const allDays = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
 
   const trigger = document.getElementById("weekly-dhikr-trigger");
@@ -129,36 +128,53 @@ function toggleQuran(event) {
 
   if(!trigger || !card || !closeBtn) return;
 
+  // اضافه کردن کلاس CSS برای انیمیشن
+  card.style.transition = "opacity 0.3s ease-in-out, transform 0.3s ease-in-out";
+  card.style.transform = "translateY(10px)";
+  card.style.opacity = 0;
+
   trigger.addEventListener("click", function(e){
-    const todayIndex = new Date().getDay(); // یکشنبه=0
-    const dayName = allDays[todayIndex];   // نام امروز به فارسی
+    const todayIndex = new Date().getDay();
+    const dayName = allDays[todayIndex];
 
     document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
     document.getElementById("dhikr-text").textContent = dhikr[dayName];
 
     const rect = trigger.getBoundingClientRect();
-    card.style.top = (rect.bottom + window.scrollY + 8) + "px";
+    const cardHeight = card.offsetHeight;
+    let top = rect.top + window.scrollY - cardHeight - 8;
+
+    // اگر بالا جا نشد، کارت پایین دکمه نمایش داده شود
+    if (top < 0) top = rect.bottom + window.scrollY + 8;
+
+    card.style.top = top + "px";
     card.style.left = (rect.left + window.scrollX) + "px";
 
-    if(card.style.display === "block") {
+    // نمایش کارت با انیمیشن
+    if(card.classList.contains("show")) {
+      card.classList.remove("show");
+      card.style.transform = "translateY(10px)";
       card.style.opacity = 0;
-      setTimeout(() => { card.style.display = "none"; }, 300);
     } else {
-      card.style.display = "block";
-      card.style.transition = "opacity 0.3s ease-in-out";
-      setTimeout(() => { card.style.opacity = 1; }, 10);
+      card.classList.add("show");
+      card.style.transform = "translateY(0)";
+      card.style.opacity = 1;
     }
   });
 
   closeBtn.addEventListener("click", function() {
+    card.classList.remove("show");
+    card.style.transform = "translateY(10px)";
     card.style.opacity = 0;
-    setTimeout(() => { card.style.display = "none"; }, 300);
+    setTimeout(() => { card.style.display = 'none'; }, 300);
   });
 
   document.addEventListener("click", function(e){
     if(!card.contains(e.target) && !trigger.contains(e.target)){
+      card.classList.remove("show");
+      card.style.transform = "translateY(10px)";
       card.style.opacity = 0;
-      setTimeout(() => { card.style.display = "none"; }, 300);
+      setTimeout(() => { card.style.display = 'none'; }, 300);
     }
   });
 })();
