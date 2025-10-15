@@ -295,23 +295,17 @@ button:hover {
     margin-bottom: 10px;
   }
 }
-/* تنظیم دکمه‌ها برای هم‌اندازه شدن */
-/* همه دکمه‌ها عمودی، اندازه یکسان و کمی کوچیک‌تر */
-.flex-button-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
+.flex-button-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* دو ستون */
+  gap: 8px;
+  justify-items: center; /* وسط چین هر ستون */
+  margin-top: 10px;
 }
 
-.flex-button-column .green-button,
-.flex-button-column .small-button,
-#quranToggle,
-#weekly-dhikr-trigger,
-#asma-trigger {
+.green-button.small-button {
   padding: 6px 10px;
-  font-size: 0.8rem;
-  min-width: 100px; /* عرض یکسان */
+  font-size: 0.85rem;
+  min-width: 110px;  /* اندازه یکسان */
   text-align: center;
 }
-
