@@ -135,26 +135,13 @@
           <p>اذان مغرب: {{ result.prayer_times.Maghrib }}</p>
           <p>اذان عشاء: {{ result.prayer_times.Isha }}</p>
 
-<div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px;">
-  
-<div style="display: flex; justify-content: center; gap: 15px; margin-top: 15px;">
-  
   <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
-    <a href="#" id="qiblaToggle" onclick="toggleQibla(event)" class="green-button small-button" style="padding: 8px 14px; font-size: 0.9rem;">قبله‌نما 🕋</a>
-    <div id="asma-trigger" class="green-button small-button" style="cursor: pointer; padding: 8px 14px; font-size: 0.9rem;">اسماء الهی ✨</div>
+    <a href="#" id="qiblaToggle" onclick="toggleQibla(event)" class="green-button small-button">قبله‌نما 🕋</a>
+    <div id="asma-trigger" class="green-button small-button" style="cursor: pointer;">اسماء الهی ✨</div>
   </div>
 
-  <a href="https://www.ghorany.com/quran.htm" 
-     target="_blank" 
-     rel="noopener noreferrer" 
-     id="quranToggle" 
-     class="green-button small-button"
-     style="padding: 8px 14px; font-size: 0.9rem;">قرآن صوتی 📖</a>
-
-  <div id="weekly-dhikr-trigger" 
-       class="green-button small-button" 
-       style="cursor: pointer; padding: 8px 14px; font-size: 0.9rem;">ذکر هفته 📿</div>
-
+  <a href="https://www.ghorany.com/quran.htm" target="_blank" rel="noopener noreferrer" id="quranToggle" class="green-button small-button">قرآن صوتی 📖</a>
+  <div id="weekly-dhikr-trigger" class="green-button small-button" style="cursor: pointer;">ذکر هفته 📿</div>
 </div>
           <div id="qiblaBox" style="display:none; max-width:700px; margin:auto; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.15); overflow:hidden;">
             <iframe src="https://www.qiblafinder.org/IR" width="100%" height="600" style="border:none; border-radius:12px 12px 0 0;"></iframe>
