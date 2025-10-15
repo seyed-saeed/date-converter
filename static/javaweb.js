@@ -120,8 +120,9 @@ function toggleQuran(event) {
     "جمعه": "اللهم صل علی محمد و آل محمد"
   };
 
-const days = ["چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه"];
-const jsToPersianIndex = [3, 4, 5, 6, 0, 1, 2]; // چهارشنبه اول
+  // روزها به ترتیب جاوااسکریپت (یکشنبه=0)
+  const allDays = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
+
   const trigger = document.getElementById("weekly-dhikr-trigger");
   const card = document.getElementById("weekly-dhikr-card");
   const closeBtn = document.getElementById("close-dhikr-card");
@@ -130,7 +131,7 @@ const jsToPersianIndex = [3, 4, 5, 6, 0, 1, 2]; // چهارشنبه اول
 
   trigger.addEventListener("click", function(e){
     const todayIndex = new Date().getDay(); // یکشنبه=0
-    const dayName = days[jsToPersianIndex[todayIndex]];
+    const dayName = allDays[todayIndex];   // نام امروز به فارسی
 
     document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
     document.getElementById("dhikr-text").textContent = dhikr[dayName];
@@ -161,4 +162,3 @@ const jsToPersianIndex = [3, 4, 5, 6, 0, 1, 2]; // چهارشنبه اول
     }
   });
 })();
-
