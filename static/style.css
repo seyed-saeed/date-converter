@@ -298,7 +298,7 @@ button:hover {
 .flex-button-group {
   display: grid;
   grid-template-columns: repeat(2, 1fr); /* دو ستون */
-  gap: 8px;
+  gap: 12px; /* فاصله بین دکمه‌ها */
   justify-items: center; /* وسط چین هر ستون */
   margin-top: 10px;
 }
