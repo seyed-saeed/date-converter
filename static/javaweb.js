@@ -159,3 +159,74 @@ function toggleQuran(event) {
     setTimeout(() => { card.style.display = "none"; }, 500);
   });
 })();
+// ✨ اسماء الهی ✨
+(function() {
+  const asma = [
+    "اللّه (خداوند یکتا)",
+    "الرّحمن (بسیار بخشنده)",
+    "الرّحیم (بسیار مهربان)",
+    "الملک (پادشاه هستی)",
+    "القدّوس (منزّه از هر عیب)",
+    "السلام (بخشنده آرامش)",
+    "المؤمن (ایجادکننده ایمنی)",
+    "المهیمن (نگهبان و مراقب)",
+    "العزیز (توانای شکست‌ناپذیر)",
+    "الجبار (اصلاح‌کننده و قاهر)",
+    "الخالق (آفریننده)",
+    "البارئ (پدیدآورنده)",
+    "المصوّر (صورت‌بخشنده)",
+    "الغفّار (بسیار آمرزنده)",
+    "القهّار (چیره و پیروز)",
+    "الوهّاب (بخشنده بزرگ)",
+    "الرّزّاق (روزی‌دهنده)",
+    "الفتّاح (گشاینده رحمت و روزی)",
+    "العلیم (دانا و آگاه)",
+    "الحلیم (بردبار)"
+  ];
+
+  const asmaBtn = document.getElementById("asma-trigger");
+  if (!asmaBtn) return;
+
+  asmaBtn.addEventListener("click", () => {
+    const rand = Math.floor(Math.random() * asma.length);
+    const name = asma[rand];
+
+    // اگر قبلاً وجود دارد، حذفش کن
+    const oldMsg = document.getElementById("asma-popup");
+    if (oldMsg) oldMsg.remove();
+
+    // ایجاد المان جدید برای پیام بالا
+    const msg = document.createElement("div");
+    msg.id = "asma-popup";
+    msg.textContent = name;
+    msg.style.position = "fixed";
+    msg.style.top = "20px";
+    msg.style.left = "50%";
+    msg.style.transform = "translateX(-50%)";
+    msg.style.background = "rgba(255, 255, 255, 0.9)";
+    msg.style.padding = "14px 22px";
+    msg.style.borderRadius = "12px";
+    msg.style.boxShadow = "0 6px 18px rgba(0,0,0,0.25)";
+    msg.style.fontFamily = "Vazir, sans-serif";
+    msg.style.fontSize = "1rem";
+    msg.style.color = "#0077cc";
+    msg.style.textAlign = "center";
+    msg.style.zIndex = "99999";
+    msg.style.opacity = "0";
+    msg.style.transition = "opacity 0.5s ease, top 0.5s ease";
+    document.body.appendChild(msg);
+
+    // افکت ظاهر شدن
+    setTimeout(() => {
+      msg.style.opacity = "1";
+      msg.style.top = "40px";
+    }, 100);
+
+    // بعد از ۶ ثانیه ناپدید شود
+    setTimeout(() => {
+      msg.style.opacity = "0";
+      msg.style.top = "20px";
+      setTimeout(() => msg.remove(), 500);
+    }, 6000);
+  });
+})();
