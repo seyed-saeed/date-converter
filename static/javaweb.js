@@ -120,7 +120,6 @@ function toggleQuran(event) {
     "جمعه": "اللهم صل علی محمد و آل محمد"
   };
 
-  // روزها به ترتیب جاوااسکریپت (یکشنبه=0)
   const allDays = ["یکشنبه", "دوشنبه", "سه‌شنبه", "چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه"];
 
   const trigger = document.getElementById("weekly-dhikr-trigger");
@@ -130,14 +129,15 @@ function toggleQuran(event) {
   if(!trigger || !card || !closeBtn) return;
 
   trigger.addEventListener("click", function(e){
-    const todayIndex = new Date().getDay(); // یکشنبه=0
-    const dayName = allDays[todayIndex];   // نام امروز به فارسی
+    const todayIndex = new Date().getDay();
+    const dayName = allDays[todayIndex];
 
     document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
     document.getElementById("dhikr-text").textContent = dhikr[dayName];
 
     const rect = trigger.getBoundingClientRect();
-    card.style.top = (rect.bottom + window.scrollY + 8) + "px";
+    const cardHeight = card.offsetHeight; // ارتفاع کارت
+    card.style.top = (rect.top + window.scrollY - cardHeight - 8) + "px"; // بالای دکمه
     card.style.left = (rect.left + window.scrollX) + "px";
 
     if(card.style.display === "block") {
