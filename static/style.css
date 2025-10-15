@@ -218,20 +218,21 @@ button:hover {
   transform: translateY(-2px);
 }
 .small-button {
-  padding: 6px 10px;       /* کمتر کردن padding */
-  font-size: 0.85rem;      /* کمی کوچک‌تر کردن متن */
+  padding: 6px 10px;
+  font-size: 0.85rem;
   border-radius: 8px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.1);
   display: inline-block;
   text-align: center;
   transition: background 0.3s ease, transform 0.2s ease;
-  max-width: 120px;        /* حداکثر عرض دکمه */
-  white-space: nowrap;     /* جلوگیری از شکستن متن به خط بعدی */
+  width: 110px;          /* 👈 همه دکمه‌ها دقیقا هم عرض */
+  white-space: nowrap;
 }
 
 .small-button:hover {
   transform: translateY(-1px);
 }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }
