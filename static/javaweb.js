@@ -120,9 +120,8 @@ function toggleQuran(event) {
     "جمعه": "اللهم صل علی محمد و آل محمد"
   };
 
-  const days = ["شنبه","یکشنبه","دوشنبه","سه‌شنبه","چهارشنبه","پنج‌شنبه","جمعه"];
-  const jsToPersianIndex = [6,0,1,2,3,4,5]; // شنبه اول
-
+const days = ["چهارشنبه", "پنج‌شنبه", "جمعه", "شنبه", "یکشنبه", "دوشنبه", "سه‌شنبه"];
+const jsToPersianIndex = [3, 4, 5, 6, 0, 1, 2]; // چهارشنبه اول
   const trigger = document.getElementById("weekly-dhikr-trigger");
   const card = document.getElementById("weekly-dhikr-card");
   const closeBtn = document.getElementById("close-dhikr-card");
