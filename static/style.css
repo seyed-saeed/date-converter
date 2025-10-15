@@ -296,14 +296,7 @@ button:hover {
   }
 }
 /* تنظیم دکمه‌ها برای هم‌اندازه شدن */
-.flex-button-group {
-  display: flex;
-  gap: 15px;
-  justify-content: center;
-  align-items: flex-start;
-  margin-top: 15px;
-}
-
+/* همه دکمه‌ها عمودی، اندازه یکسان و کمی کوچیک‌تر */
 .flex-button-column {
   display: flex;
   flex-direction: column;
@@ -314,10 +307,11 @@ button:hover {
 .flex-button-column .green-button,
 .flex-button-column .small-button,
 #quranToggle,
-#weekly-dhikr-trigger {
-  padding: 8px 14px;
-  font-size: 0.9rem;
-  min-width: 120px; /* عرض یکسان */
+#weekly-dhikr-trigger,
+#asma-trigger {
+  padding: 6px 10px;
+  font-size: 0.8rem;
+  min-width: 100px; /* عرض یکسان */
   text-align: center;
 }
 
