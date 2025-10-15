@@ -108,7 +108,6 @@ function toggleQuran(event) {
     }
   }
 }
-// ====== ذکر هفته ======
 (function(){
   const dhikr = {
     "شنبه": "یا رب العالمین",
@@ -128,6 +127,15 @@ function toggleQuran(event) {
 
   if(!trigger || !card || !closeBtn) return;
 
+  // آماده‌سازی کارت برای انیمیشن
+  card.style.position = "fixed";
+  card.style.top = "20px"; // بالای صفحه
+  card.style.left = "50%";
+  card.style.transform = "translateX(-50%)";
+  card.style.opacity = 0;
+  card.style.transition = "opacity 0.5s ease-in-out";
+  card.style.zIndex = 9999;
+
   trigger.addEventListener("click", function(e){
     const todayIndex = new Date().getDay();
     const dayName = allDays[todayIndex];
@@ -135,30 +143,19 @@ function toggleQuran(event) {
     document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
     document.getElementById("dhikr-text").textContent = dhikr[dayName];
 
-    const rect = trigger.getBoundingClientRect();
-    const cardHeight = card.offsetHeight; // ارتفاع کارت
-    card.style.top = (rect.top + window.scrollY - cardHeight - 8) + "px"; // بالای دکمه
-    card.style.left = (rect.left + window.scrollX) + "px";
+    // نمایش کارت
+    card.style.display = "block";
+    setTimeout(() => { card.style.opacity = 1; }, 10);
 
-    if(card.style.display === "block") {
+    // بعد از 6 ثانیه کارت محو شود
+    setTimeout(() => {
       card.style.opacity = 0;
-      setTimeout(() => { card.style.display = "none"; }, 300);
-    } else {
-      card.style.display = "block";
-      card.style.transition = "opacity 0.3s ease-in-out";
-      setTimeout(() => { card.style.opacity = 1; }, 10);
-    }
+      setTimeout(() => { card.style.display = "none"; }, 500); // بعد از fade out کامل
+    }, 6000);
   });
 
   closeBtn.addEventListener("click", function() {
     card.style.opacity = 0;
-    setTimeout(() => { card.style.display = "none"; }, 300);
-  });
-
-  document.addEventListener("click", function(e){
-    if(!card.contains(e.target) && !trigger.contains(e.target)){
-      card.style.opacity = 0;
-      setTimeout(() => { card.style.display = "none"; }, 300);
-    }
+    setTimeout(() => { card.style.display = "none"; }, 500);
   });
 })();
