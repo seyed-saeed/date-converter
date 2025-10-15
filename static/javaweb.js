@@ -123,40 +123,43 @@ function toggleQuran(event) {
 
   const trigger = document.getElementById("weekly-dhikr-trigger");
   const card = document.getElementById("weekly-dhikr-card");
-  const closeBtn = document.getElementById("close-dhikr-card");
 
-  if(!trigger || !card || !closeBtn) return;
+  if(!trigger || !card) return;
 
-  // آماده‌سازی کارت برای انیمیشن
+  // تنظیمات ظاهری کارت (پس‌زمینه سفید و متن آبی)
   card.style.position = "fixed";
-  card.style.top = "20px"; // بالای صفحه
+  card.style.top = "20px";
   card.style.left = "50%";
   card.style.transform = "translateX(-50%)";
   card.style.opacity = 0;
   card.style.transition = "opacity 0.5s ease-in-out";
   card.style.zIndex = 9999;
+  card.style.background = "rgba(255, 255, 255, 0.9)";
+  card.style.color = "#0077cc"; // آبی برای متن
+  card.style.border = "1px solid rgba(0, 119, 204, 0.3)";
+  card.style.textAlign = "center";
+  card.style.padding = "14px 18px";
+  card.style.borderRadius = "10px";
+  card.style.boxShadow = "0 8px 20px rgba(0,0,0,0.25)";
+  card.innerHTML = `<div id="day-name" style="font-weight:bold;font-size:16px;margin-bottom:6px;"></div>
+                    <div id="dhikr-text" style="font-size:15px;line-height:1.6;font-weight:500;"></div>`;
 
-  trigger.addEventListener("click", function(e){
+  trigger.addEventListener("click", function(){
     const todayIndex = new Date().getDay();
     const dayName = allDays[todayIndex];
 
     document.getElementById("day-name").textContent = "ذکر " + dayName + ":";
     document.getElementById("dhikr-text").textContent = dhikr[dayName];
 
-    // نمایش کارت
+    // نمایش کارت از بالا
     card.style.display = "block";
     setTimeout(() => { card.style.opacity = 1; }, 10);
 
-    // بعد از 6 ثانیه کارت محو شود
+    // محو شدن بعد از ۶ ثانیه
     setTimeout(() => {
       card.style.opacity = 0;
-      setTimeout(() => { card.style.display = "none"; }, 500); // بعد از fade out کامل
+      setTimeout(() => { card.style.display = "none"; }, 500);
     }, 6000);
-  });
-
-  closeBtn.addEventListener("click", function() {
-    card.style.opacity = 0;
-    setTimeout(() => { card.style.display = "none"; }, 500);
   });
 })();
 // ✨ اسماء الهی ✨
