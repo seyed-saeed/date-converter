@@ -217,6 +217,19 @@ button:hover {
   background-color: #43a047;
   transform: translateY(-2px);
 }
+.small-button {
+  padding: 8px 12px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  display: inline-block;
+  text-align: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.small-button:hover {
+  transform: translateY(-1px);
+}
 
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
