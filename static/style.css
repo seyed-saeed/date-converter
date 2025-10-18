@@ -1,311 +1,321 @@
+/* تنظیمات پایه و یونیورسال */
 * {
   box-sizing: border-box;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: 'Vazir', sans-serif;
-  background: linear-gradient(to bottom, #87CEEB, #ffffff);
+  font-family: 'Vazir', Tahoma, sans-serif;
+  background: linear-gradient(135deg, #74b9ff, #dfe6e9);
   direction: rtl;
   margin: 0;
   padding: 0;
   min-height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.5s ease;
+
+  /* انیمیشن تغییر پس‌زمینه آرام */
+  transition: background 0.7s ease;
+  color: #2d3436;
 }
 
+/* کانتینر اصلی با بلور شیشه‌ای قوی‌تر و سایه بهتر */
 .container {
-  background: rgba(255, 255, 255, 0.25);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  width: 90%;
-  max-width: 520px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  animation: fadeIn 0.6s ease-in-out;
+  background: rgba(255, 255, 255, 0.32);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  padding: 40px 35px;
+  border-radius: 24px;
+  box-shadow: 0 16px 48px rgba(0,0,0,0.18);
+  width: 95%;
+  max-width: 600px;
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+
+  animation: fadeIn 0.7s ease forwards;
 }
 
-h1 {
-  color: #0077cc;
-  margin-bottom: 30px;
-  font-size: 2rem;
+/* عنوان با تایپوگرافی خاص و سایه ملایم */
+h1, #type-title {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #0984e3;
+  margin-bottom: 38px;
   text-align: center;
-  font-weight: bold;
+  letter-spacing: 1.5px;
+
+  /* حالت تایپ */
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 4px solid #0984e3;
+  animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+  max-width: 100%;
 }
 
+/* انیمیشن تایپ */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+/* چشمک زدن نشانگر تایپ */
+@keyframes blink-caret {
+  0%, 100% { border-color: transparent; }
+  50% { border-color: #0984e3; }
+}
+
+/* فرم اصلی */
 form {
   width: 100%;
+  margin-bottom: 24px;
+}
+
+/* ردیف‌ها با فاصله بهتر */
+.row, .row-horizontal {
   margin-bottom: 20px;
-}
-
-#prayer-form {
-  animation: fadeIn 0.4s ease-in-out;
-}
-
-.hidden {
-  display: none !important;
+  text-align: right;
 }
 
 .row {
-  margin-bottom: 16px;
-  text-align: right;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
 .row-horizontal {
   display: flex;
   flex-direction: row;
-  gap: 16px;
-  margin-bottom: 16px;
+  gap: 20px;
 }
 
+/* استایل اینپوت و سلکت با سایه و افکت مدرن */
 select,
 input[type="text"] {
-  padding: 10px;
+  padding: 14px 18px;
   width: 100%;
-  border: 1px solid #bbb;
-  border-radius: 8px;
-  font-size: 1rem;
-  background-color: rgba(255,255,255,0.85);
-  transition: border 0.3s ease, box-shadow 0.3s ease;
+  border: 1.8px solid #bbb;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  background-color: rgba(255,255,255,0.95);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+  font-weight: 600;
+  color: #34495e;
+  font-family: 'Vazir', Tahoma, sans-serif;
 }
 
 select:focus,
 input[type="text"]:focus {
-  border-color: #00aaff;
-  box-shadow: 0 0 6px rgba(0,170,255,0.4);
+  border-color: #0984e3;
+  box-shadow: 0 0 12px rgba(9, 132, 227, 0.45);
   outline: none;
 }
 
 input[type="text"]::placeholder {
-  color: #888;
+  color: #a4b0be;
   font-style: italic;
+  font-weight: 400;
 }
 
+/* لیبل‌ها با فونت قوی و رنگ ملایم */
 label {
-  margin-bottom: 5px;
-  font-weight: bold;
-  font-size: 1rem;
-  color: #222;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #2d3436;
 }
 
+/* گروه رادیو و چک‌باکس */
 .radio-group label {
-  margin-left: 15px;
+  margin-left: 18px;
+  font-weight: 600;
+  color: #2d3436;
 }
 
-.buttons {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  margin-top: 10px;
-}
-
+/* دکمه‌ها زیبا و شیک */
 button {
-  font-family: 'Vazir', sans-serif;
-  padding: 12px;
-  background: linear-gradient(to right, #0077cc, #00aaff);
+  font-family: 'Vazir', Tahoma, sans-serif;
+  padding: 14px;
+  background: linear-gradient(90deg, #0984e3, #74b9ff);
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 16px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.15rem;
   width: 100%;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
+  box-shadow: 0 8px 20px rgba(9, 132, 227, 0.4);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
+  font-weight: 700;
+  user-select: none;
 }
 
 button::after {
   content: "";
   position: absolute;
   top: 0;
-  left: -100%;
-  width: 100%;
+  left: -120%;
+  width: 120%;
   height: 100%;
-  background: rgba(255,255,255,0.2);
-  transition: left 0.3s ease;
+  background: rgba(255,255,255,0.25);
+  transform: skewX(-20deg);
+  transition: left 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
 }
 
 button:hover::after {
-  left: 0;
-}
-a {
-  text-decoration: none;
+  left: 120%;
 }
 
 button:hover {
-  background: linear-gradient(to right, #005fa3, #0088cc);
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+  background: linear-gradient(90deg, #74b9ff, #0984e3);
+  box-shadow: 0 12px 28px rgba(9, 132, 227, 0.6);
+  transform: translateY(-3px);
 }
 
+/* لینک‌های دکمه‌ای سبز */
+.green-button {
+  padding: 12px 18px;
+  background-color: #00b894;
+  color: white;
+  border-radius: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  font-size: 1.1rem;
+  box-shadow: 0 8px 20px rgba(0, 184, 148, 0.35);
+  transition: background-color 0.35s ease, transform 0.25s ease;
+  display: inline-block;
+  text-align: center;
+  user-select: none;
+}
+
+.green-button:hover {
+  background-color: #019875;
+  transform: translateY(-3px);
+}
+
+/* دکمه‌های کوچک در گروه با اندازه برابر */
+.small-button {
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  border-radius: 14px;
+  box-shadow: 0 5px 12px rgba(0,0,0,0.12);
+  display: inline-block;
+  text-align: center;
+  transition: background 0.35s ease, transform 0.2s ease;
+  width: 120px;
+  white-space: nowrap;
+  font-weight: 600;
+  background-color: #74b9ff;
+  color: #fff;
+  user-select: none;
+  border: none;
+  cursor: pointer;
+}
+
+.small-button:hover {
+  background-color: #0984e3;
+  transform: translateY(-2px);
+}
+
+/* بخش نتایج باکس‌ها */
 .result {
-  margin-top: 20px;
-  font-size: 1rem;
-  color: #444;
-  background-color: rgba(255,255,255,0.7);
-  padding: 15px;
-  border-radius: 10px;
-  line-height: 1.8;
-  animation: fadeIn 0.4s ease-in-out;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-top: 30px;
+  font-size: 1.1rem;
+  color: #2d3436;
+  background-color: rgba(255,255,255,0.85);
+  padding: 22px 28px;
+  border-radius: 22px;
+  line-height: 2;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+  animation: fadeIn 0.5s ease forwards;
+  user-select: text;
 }
 
 .result h3 {
-  font-size: 1.2rem;
-  color: #0077cc;
-  margin-bottom: 10px;
-}
-#qiblaBox {
-  opacity: 0;
-  transition: opacity 0.4s ease;
+  font-size: 1.5rem;
+  color: #0984e3;
+  margin-bottom: 16px;
+  font-weight: 900;
 }
 
+/* خطا با استایل مشخص */
 .error {
-  color: #d8000c;
-  background-color: #ffdddd;
-  padding: 10px;
-  border-radius: 8px;
-  margin-top: 20px;
+  color: #c0392b;
+  background-color: #fceaea;
+  padding: 14px 20px;
+  border-radius: 14px;
+  margin-top: 28px;
   text-align: center;
-  box-shadow: 0 2px 6px rgba(255,0,0,0.1);
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(192, 57, 43, 0.15);
 }
+
+/* نمایش نتایج در فرمتی ریسپانسیو و مرتب */
 .prayer-result {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: 18px;
+  margin-top: 25px;
 }
 
 .prayer-result h3 {
   flex: 0 0 100%;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
+  font-weight: 900;
+  color: #0984e3;
+  font-size: 1.5rem;
 }
 
 .prayer-result p {
-  flex: 0 0 calc(50% - 12px);
+  flex: 1 1 calc(50% - 18px);
   margin: 0;
-  
-  background-color: rgba(255, 255, 255, 0.1);
-  padding: 10px 14px;
-  border-radius: 8px;
-  font-family: 'Vazir', sans-serif;
-  font-size: 1rem;
+  background-color: rgba(255, 255, 255, 0.18);
+  padding: 18px 20px;
+  border-radius: 18px;
+  font-family: 'Vazir', Tahoma, sans-serif;
+  font-size: 1.1rem;
   text-align: right;
-  box-sizing: border-box;
-  box-shadow: 0 2px 6px rgba(255,0,0,0.1);
-}
-.green-button {
-  padding: 10px 16px;
-  background-color: #4caf50;
-  color: white;
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: background 0.3s ease, transform 0.2s ease;
-  display: inline-block;
-  text-align: center;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  user-select: text;
+  color: #34495e;
+  transition: background-color 0.3s ease;
 }
 
-.green-button:hover {
-  background-color: #43a047;
-  transform: translateY(-2px);
-}
-.small-button {
-  padding: 6px 10px;
-  font-size: 0.85rem;
-  border-radius: 8px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-  display: inline-block;
-  text-align: center;
-  transition: background 0.3s ease, transform 0.2s ease;
-  width: 110px;          /* 👈 همه دکمه‌ها دقیقا هم عرض */
-  white-space: nowrap;
+.prayer-result p:hover {
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
-.small-button:hover {
-  transform: translateY(-1px);
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* افکت تایپ ماشینی برای عنوان */
-#type-title {
-  font-size: 2.8rem;
-  font-weight: bold;
-  color: #0077cc;
-  text-align: center;
-  margin: 0 auto 30px auto; /* وسط‌چین افقی */
-  white-space: nowrap;
-  overflow: hidden;
-  border-right: 3px solid #0077cc;
-  animation: blink 0.8s infinite;
-  backdrop-filter: blur(12px);
-  background-color: rgba(255, 255, 255, 0.25);
-  padding: 12px 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  display: block; /* از inline-block به block تغییر کن */
-  max-width: 100%;
-}
-
-
-
-/* چشمک‌زن برای نشانگر تایپ */
-@keyframes blink-cursor {
-  0%, 100% {
-    border-color: transparent;
-  }
-  50% {
-    border-color: #0077cc;
-  }
-}
-
-@media screen and (max-width: 360px) {
+/* ریسپانسیو برای موبایل */
+@media screen and (max-width: 480px) {
   .prayer-result {
     flex-direction: column;
   }
 
   .prayer-result p {
-    width: 100% !important;
+    flex: 1 1 100% !important;
   }
-}
-#qiblaBox {
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-@media screen and (max-width: 480px) {
+
   .green-button {
-    display: block;
     width: 100%;
-    margin-bottom: 10px;
+    margin-bottom: 14px;
   }
 
-  .calendar-nav button {
+  .small-button {
     width: 100%;
-    margin-bottom: 10px;
   }
 }
-.flex-button-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* دو ستون */
-  gap: 12px; /* فاصله بین دکمه‌ها */
-  justify-items: center; /* وسط چین هر ستون */
-  margin-top: 10px;
-}
 
-.green-button.small-button {
-  padding: 6px 10px;
-  font-size: 0.85rem;
-  min-width: 110px;  /* اندازه یکسان */
-  text-align: center;
+/* انیمیشن fadeIn */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
