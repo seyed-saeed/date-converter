@@ -139,6 +139,8 @@
   <div id="weekly-dhikr-trigger" class="green-button small-button" style="cursor: pointer;">ذکر هفته 📿</div>
   <div id="asma-trigger" class="green-button small-button" style="cursor: pointer;">اسماء الهی ✨</div>
   <a href="#" id="qiblaToggle" onclick="toggleQibla(event)" class="green-button small-button">قبله‌نما 🕋</a>
+  <div id="quran-fact-trigger" class="green-button small-button" style="cursor: pointer;">دانستنی‌های قرآنی 📚</div>
+<div id="estekhareh-trigger" class="green-button small-button" style="cursor: pointer;">استخاره ✨</div>
 </div>
           <div id="qiblaBox" style="display:none; max-width:700px; margin:auto; border-radius:12px; box-shadow:0 4px 15px rgba(0,0,0,0.15); overflow:hidden;">
             <iframe src="https://www.qiblafinder.org/IR" width="100%" height="600" style="border:none; border-radius:12px 12px 0 0;"></iframe>
@@ -163,7 +165,7 @@
     <div id="day-name" style="font-weight:bold; font-size:16px; margin-bottom:6px;"></div>
     <div id="dhikr-text" style="font-size:14px; line-height:1.5; color:#333;"></div>
   </div>
-
+<div id="popup-card" style="display: none;"></div>
 <script src="static/javaweb.js"></script>
 <script>
   {% if result and result.action == "convert" %}
