@@ -1,120 +1,122 @@
 * {
   box-sizing: border-box;
-  transition: all 0.3s ease;
 }
 
 body {
   font-family: 'Vazir', sans-serif;
-  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  background: linear-gradient(to bottom, #87CEEB, #ffffff);
   direction: rtl;
   margin: 0;
-  padding: 20px;
+  padding: 0;
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #f0f0f0;
+  transition: background 0.5s ease;
 }
 
 .container {
-  background: rgba(30, 60, 114, 0.85);
-  backdrop-filter: blur(15px);
-  -webkit-backdrop-filter: blur(15px);
-  padding: 40px 30px;
-  border-radius: 20px;
-  box-shadow: 0 15px 40px rgba(10, 30, 70, 0.5);
-  width: 100%;
-  max-width: 550px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  animation: fadeInUp 0.8s ease forwards;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 520px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: fadeIn 0.6s ease-in-out;
 }
 
 h1 {
-  color: #f0f0f0;
+  color: #0077cc;
   margin-bottom: 30px;
-  font-size: 2.6rem;
+  font-size: 2rem;
   text-align: center;
-  font-weight: 900;
-  letter-spacing: 1.5px;
-  text-shadow: 0 0 10px rgba(240, 240, 240, 0.4);
+  font-weight: bold;
 }
 
 form {
   width: 100%;
-  margin-bottom: 10px;
-}
-
-.row, .row-horizontal {
-  display: flex;
-  gap: 15px;
   margin-bottom: 20px;
 }
 
+#prayer-form {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.hidden {
+  display: none !important;
+}
+
 .row {
+  margin-bottom: 16px;
+  text-align: right;
+  display: flex;
   flex-direction: column;
 }
 
 .row-horizontal {
+  display: flex;
   flex-direction: row;
+  gap: 16px;
+  margin-bottom: 16px;
 }
 
-label {
-  font-weight: 700;
-  font-size: 1.1rem;
-  color: #cfd8dc;
-  margin-bottom: 6px;
-  user-select: none;
-}
-
-select, input[type="text"] {
-  padding: 14px 18px;
+select,
+input[type="text"] {
+  padding: 10px;
   width: 100%;
-  font-size: 1.1rem;
-  border-radius: 12px;
-  border: none;
-  background: rgba(255, 255, 255, 0.1);
-  color: #f0f0f0;
-  box-shadow: inset 0 0 6px rgba(255,255,255,0.1);
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 1rem;
+  background-color: rgba(255,255,255,0.85);
+  transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+select:focus,
+input[type="text"]:focus {
+  border-color: #00aaff;
+  box-shadow: 0 0 6px rgba(0,170,255,0.4);
   outline: none;
-  transition: background 0.3s ease, box-shadow 0.3s ease;
-}
-
-select:hover, input[type="text"]:hover {
-  background: rgba(255, 255, 255, 0.15);
-  box-shadow: inset 0 0 10px rgba(255,255,255,0.25);
-}
-
-select:focus, input[type="text"]:focus {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 12px 3px #62dafb;
-  color: #000;
 }
 
 input[type="text"]::placeholder {
-  color: #bbb;
+  color: #888;
   font-style: italic;
-  user-select: none;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  font-size: 1rem;
+  color: #222;
+}
+
+.radio-group label {
+  margin-left: 15px;
 }
 
 .buttons {
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-top: 15px;
+  gap: 8px;
+  margin-top: 10px;
 }
 
+/* اینجا استایل دکمه‌ها با تغییرات شما */
 button {
   font-family: 'Vazir', sans-serif;
-  padding: 16px 20px;
-  background: linear-gradient(90deg, #00d2ff 0%, #3a47d5 100%);
-  color: #fff;
+  padding: 12px;
+  background: linear-gradient(to right, #0077cc, #00aaff);
+  color: white;
   border: none;
-  border-radius: 14px;
+  border-radius: 10px;
   cursor: pointer;
-  font-size: 1.2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  box-shadow: 0 8px 20px rgba(58, 71, 213, 0.6);
+  font-size: 1rem;
+  width: 100%;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   user-select: none;
@@ -124,213 +126,206 @@ button::after {
   content: "";
   position: absolute;
   top: 0;
-  left: -120%;
-  width: 150%;
+  left: -100%;
+  width: 100%;
   height: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  transform: skewX(-25deg);
-  transition: left 0.4s ease;
+  background: rgba(255,255,255,0.2);
+  transition: left 0.3s ease;
   pointer-events: none;
 }
 
 button:hover::after {
-  left: 100%;
+  left: 0;
 }
 
 button:hover {
-  background: linear-gradient(90deg, #3a47d5 0%, #00d2ff 100%);
-  box-shadow: 0 12px 28px rgba(58, 71, 213, 0.8);
-  transform: translateY(-3px);
+  background: linear-gradient(to right, #005fa3, #0088cc);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
 }
 
-.hidden {
-  display: none !important;
+/* حالت فعال (فشار داده شده) */
+button:active {
+  background: linear-gradient(to right, #004080, #006699);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.3);
+  transform: translateY(1px);
+  transition: none; /* سریع‌تر اعمال شود */
+}
+
+a {
+  text-decoration: none;
 }
 
 .result {
-  margin-top: 25px;
-  font-size: 1.15rem;
-  color: #d1eaff;
-  background-color: rgba(58, 71, 213, 0.25);
-  padding: 20px;
-  border-radius: 16px;
-  line-height: 1.9;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-  user-select: text;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #444;
+  background-color: rgba(255,255,255,0.7);
+  padding: 15px;
+  border-radius: 10px;
+  line-height: 1.8;
+  animation: fadeIn 0.4s ease-in-out;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
 .result h3 {
-  font-size: 1.5rem;
-  color: #a8c9ff;
-  margin-bottom: 14px;
-  font-weight: 900;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.4);
+  font-size: 1.2rem;
+  color: #0077cc;
+  margin-bottom: 10px;
 }
 
-.error {
-  color: #ff6b6b;
-  background-color: #3b0000;
-  padding: 14px;
-  border-radius: 12px;
+#error {
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+#error.show {
+  opacity: 1;
+}
+
+#error {
+  color: #d8000c;
+  background-color: #ffdddd;
+  padding: 10px;
+  border-radius: 8px;
   margin-top: 20px;
   text-align: center;
-  font-weight: 800;
-  box-shadow: 0 2px 10px rgba(255, 0, 0, 0.5);
+  box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
 
 .prayer-result {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px;
-  margin-top: 15px;
-  justify-content: center;
+  gap: 12px;
 }
 
 .prayer-result h3 {
-  flex-basis: 100%;
-  margin-bottom: 20px;
-  color: #a8c9ff;
-  text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
-  font-weight: 900;
+  flex: 0 0 100%;
+  margin-bottom: 12px;
 }
 
 .prayer-result p {
-  flex: 1 1 calc(50% - 18px);
+  flex: 0 0 calc(50% - 12px);
   margin: 0;
-  background-color: rgba(58, 71, 213, 0.2);
-  padding: 15px 20px;
-  border-radius: 14px;
+  background-color: rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
+  border-radius: 8px;
   font-family: 'Vazir', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1rem;
   text-align: right;
-  box-shadow: 0 3px 8px rgba(58, 71, 213, 0.3);
-  color: #d1eaff;
-  user-select: text;
-  transition: background-color 0.3s ease;
-}
-
-.prayer-result p:hover {
-  background-color: rgba(58, 71, 213, 0.35);
+  box-sizing: border-box;
+  box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
 
 .green-button {
-  padding: 14px 20px;
-  background-color: #28a745;
+  padding: 10px 16px;
+  background-color: #4caf50;
   color: white;
-  border-radius: 12px;
-  font-weight: 800;
+  border-radius: 8px;
+  font-weight: bold;
   text-decoration: none;
-  font-size: 1.15rem;
-  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  font-size: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease, transform 0.2s ease;
   display: inline-block;
   text-align: center;
-  user-select: none;
 }
 
 .green-button:hover {
-  background-color: #218838;
-  transform: translateY(-3px);
-}
-
-.small-button {
-  padding: 10px 16px;
-  font-size: 0.95rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-  display: inline-block;
-  text-align: center;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-  min-width: 130px;
-  user-select: none;
-  cursor: pointer;
-  background: linear-gradient(90deg, #5a86ff, #4a74f8);
-  color: #fff;
-  font-weight: 700;
-}
-
-.small-button:hover {
-  background: linear-gradient(90deg, #4a74f8, #5a86ff);
+  background-color: #43a047;
   transform: translateY(-2px);
 }
 
-.flex-button-group {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
-  justify-items: center;
-  margin-top: 15px;
+.small-button {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  border-radius: 8px;
+  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+  display: inline-block;
+  text-align: center;
+  transition: background 0.3s ease, transform 0.2s ease;
+  width: 110px;          /* 👈 همه دکمه‌ها دقیقا هم عرض */
+  white-space: nowrap;
 }
 
-/* انیمیشن fadeInUp برای
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(30px);
+.small-button:hover {
+  transform: translateY(-1px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* افکت تایپ ماشینی برای عنوان */
+#type-title {
+  font-size: 2.8rem;
+  font-weight: bold;
+  color: #0077cc;
+  text-align: center;
+  margin: 0 auto 30px auto; /* وسط‌چین افقی */
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 3px solid #0077cc;
+  animation: blink 0.8s infinite;
+  backdrop-filter: blur(12px);
+  background-color: rgba(255, 255, 255, 0.25);
+  padding: 12px 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  display: block; /* از inline-block به block تغییر کن */
+  max-width: 100%;
+}
+
+/* چشمک‌زن برای نشانگر تایپ */
+@keyframes blink-cursor {
+  0%, 100% {
+    border-color: transparent;
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  50% {
+    border-color: #0077cc;
   }
 }
 
-/* واکنشگرایی برای موبایل */
-@media screen and (max-width: 600px) {
-  body {
-    padding: 15px;
-  }
-
-  .container {
-    padding: 30px 20px;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 16px;
-  }
-
-  h1 {
-    font-size: 2rem;
-  }
-
-  .row-horizontal {
+@media screen and (max-width: 360px) {
+  .prayer-result {
     flex-direction: column;
   }
 
   .prayer-result p {
-    flex-basis: 100% !important;
-  }
-
-  .flex-button-group {
-    grid-template-columns: 1fr !important;
-    gap: 10px;
-  }
-
-  button, .green-button, .small-button {
-    font-size: 1rem;
-    padding: 14px 16px;
+    width: 100% !important;
   }
 }
 
-/* مدیا کوئری برای صفحه نمایش های خیلی کوچک */
-@media screen and (max-width: 360px) {
-  h1 {
-    font-size: 1.6rem;
-  }
-
-  button, .green-button, .small-button {
-    font-size: 0.9rem;
-    padding: 12px 14px;
-  }
-}
-.hidden {
-  display: none !important;
-}
 #qiblaBox {
   opacity: 0;
-  pointer-events: none;
   transition: opacity 0.4s ease;
 }
 
-#qiblaBox.visible {
-  opacity: 1;
-  pointer-events: auto;
+@media screen and (max-width: 480px) {
+  .green-button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .calendar-nav button {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+.flex-button-group {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* دو ستون */
+  gap: 12px; /* فاصله بین دکمه‌ها */
+  justify-items: center; /* وسط چین هر ستون */
+  margin-top: 10px;
+}
+
+.green-button.small-button {
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  min-width: 110px;  /* اندازه یکسان */
+  text-align: center;
 }
