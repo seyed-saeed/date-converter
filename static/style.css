@@ -134,6 +134,7 @@ button::after {
 button:hover::after {
   left: 0;
 }
+
 a {
   text-decoration: none;
 }
@@ -161,6 +162,7 @@ button:hover {
   color: #0077cc;
   margin-bottom: 10px;
 }
+
 #qiblaBox {
   opacity: 0;
   transition: opacity 0.4s ease;
@@ -175,6 +177,7 @@ button:hover {
   text-align: center;
   box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
+
 .prayer-result {
   display: flex;
   flex-wrap: wrap;
@@ -189,7 +192,6 @@ button:hover {
 .prayer-result p {
   flex: 0 0 calc(50% - 12px);
   margin: 0;
-  
   background-color: rgba(255, 255, 255, 0.1);
   padding: 10px 14px;
   border-radius: 8px;
@@ -199,6 +201,7 @@ button:hover {
   box-sizing: border-box;
   box-shadow: 0 2px 6px rgba(255,0,0,0.1);
 }
+
 .green-button {
   padding: 10px 16px;
   background-color: #4caf50;
@@ -217,6 +220,7 @@ button:hover {
   background-color: #43a047;
   transform: translateY(-2px);
 }
+
 .small-button {
   padding: 6px 10px;
   font-size: 0.85rem;
@@ -258,8 +262,6 @@ button:hover {
   max-width: 100%;
 }
 
-
-
 /* چشمک‌زن برای نشانگر تایپ */
 @keyframes blink-cursor {
   0%, 100% {
@@ -279,10 +281,12 @@ button:hover {
     width: 100% !important;
   }
 }
+
 #qiblaBox {
   opacity: 0;
   transition: opacity 0.4s ease;
 }
+
 @media screen and (max-width: 480px) {
   .green-button {
     display: block;
@@ -295,12 +299,20 @@ button:hover {
     margin-bottom: 10px;
   }
 }
+
+/* این بخش جدید اضافه شده برای چینش دکمه‌ها */
 .flex-button-group {
   display: grid;
-  grid-template-columns: repeat(2, 1fr); /* دو ستون */
-  gap: 12px; /* فاصله بین دکمه‌ها */
-  justify-items: center; /* وسط چین هر ستون */
+  grid-template-columns: 1fr; /* موبایل: یک ستون */
+  gap: 12px;
+  justify-items: center;
   margin-top: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .flex-button-group {
+    grid-template-columns: repeat(3, 1fr); /* دسکتاپ: 3 ستون */
+  }
 }
 
 .green-button.small-button {
